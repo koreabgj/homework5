@@ -13,7 +13,7 @@ import com.example.imagesearch.R
 class SearchFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: SearchAdapter // 여기서 MyAdapter는 사용자가 직접 만든 어댑터 클래스입니다.
+    private lateinit var adapter: SearchAdapter
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -33,6 +33,6 @@ class SearchFragment : Fragment() {
 //        recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // 여기서 adapter에 데이터를 설정하거나, 필요에 따라 데이터를 업데이트할 수 있습니다.
+        // adapter에 데이터를 설정하거나, 필요에 따라 데이터를 업데이트
     }
 }
