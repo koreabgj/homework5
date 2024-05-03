@@ -6,7 +6,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitInstance {
-    const val API_KEY = "d7dad5f8832c904973babb0a21d079ab"
+    private const val BASE_URL = "https://dapi.kakao.com"
+    private const val API_KEY = "d7dad5f8832c904973babb0a21d079ab"
 
     private val okHttpClient: OkHttpClient by lazy {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -19,12 +20,16 @@ object RetrofitInstance {
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
-            .client(okHttpClient)    // Logcat에서 패킷 내용을 로그로 남기는 속성
-            .baseUrl("https://dapi.kakao.com")
+            .client(okHttpClient)
+            .baseUrl(BASE_URL)
             .build()
     }
 
     val retrofitService: RetrofitService by lazy {
         retrofit.create(RetrofitService::class.java)
+    }
+
+    fun getApiKey(): String {
+        return API_KEY
     }
 }

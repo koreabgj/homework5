@@ -7,6 +7,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imagesearch.data.Image
 import com.example.imagesearch.databinding.ItemLayoutBinding
+import com.example.imagesearch.ui.MainActivity.ImageStorage.loadImage
 
 class SearchAdapter(private val onClick: List<String>) :
     RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
@@ -19,12 +20,12 @@ class SearchAdapter(private val onClick: List<String>) :
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(private val binding: ItemLayoutBinding) :
+    class ViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Image) {
             binding.apply {
-                loadImage(item.imageUrl, ivItem) // 이미지의 URL을 전달하여 loadImage 함수 호출
+//                loadImage(url, ivItem) // 이미지의 URL을 전달하여 loadImage 함수 호출
                 root.setOnClickListener { }
             }
         }
@@ -47,7 +48,7 @@ class SearchAdapter(private val onClick: List<String>) :
 
     // 이미지를 로드하고 ImageView에 설정하는 함수
     private fun loadImage(url: String, imageView: ImageView) {
-        // 실제로는 네트워크 라이브러리를 사용하여 이미지를 가져와야 합니다.
-        // 이미지를 가져오는 코드는 이곳에 작성합니다.
+        // 실제로는 네트워크 라이브러리를 사용하여 이미지를 가져오기
+        // 이미지를 가져오는 코드는 이곳에 작성
     }
 }

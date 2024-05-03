@@ -6,33 +6,32 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imagesearch.R
 
 class KeepFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: KeepAdapter
-
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_keep, container, false)
-        recyclerView = view.findViewById(R.id.recyclerView)
+        val view = inflater.inflate(R.layout.fragment_search, container, false)
+
+        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
+
+        // Replace this with your data and adapter
+        val data = listOf("Item 1", "Item 2", "Item 3")
+        val adapter = SearchAdapter(data)
+        recyclerView.adapter = adapter
+
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        adapter = KeepAdapter()
-//        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        // adapter에 데이터를 설정하거나, 필요에 따라 데이터를 업데이트
+    private fun GridLayoutManager(searchFragment: KeepFragment, i: Int): GridLayoutManager {
+        TODO("Not yet implemented")
     }
 }

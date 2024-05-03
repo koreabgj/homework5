@@ -1,14 +1,15 @@
 package com.example.imagesearch.ui
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imagesearch.R
+
 
 class SearchFragment : Fragment() {
 
@@ -21,7 +22,7 @@ class SearchFragment : Fragment() {
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
 
-        recyclerView.layoutManager = GridLayoutManager(requireContext())
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
 
         // Replace this with your data and adapter
         val data = listOf("Item 1", "Item 2", "Item 3")
@@ -31,7 +32,7 @@ class SearchFragment : Fragment() {
         return view
     }
 
-    private fun GridLayoutManager(requireContext: Context): RecyclerView.LayoutManager? {
+    private fun GridLayoutManager(searchFragment: SearchFragment, i: Int): GridLayoutManager {
         TODO("Not yet implemented")
     }
 }

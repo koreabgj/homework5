@@ -10,13 +10,14 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="620dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="24dp"
         android:padding="8dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/card_search"
         app:layout_constraintTop_toBottomOf="@+id/et_search"
+        app:spanCount="2"
         tools:listitem="@layout/item_layout" />
 
     <!-- 이미지 검색 프래그먼트를 담을 FrameLayout -->
@@ -32,12 +33,16 @@
     <!-- 검색창 -->
     <EditText
         android:id="@+id/et_search"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="검색어를 입력하세요"
+        android:layout_width="0dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/et_search_background"
+        android:hint="   검색어를 입력하세요"
         android:imeOptions="actionSearch"
         android:inputType="text"
+        android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@+id/btn_execute_search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -47,8 +52,8 @@
         android:id="@+id/btn_execute_search"
         android:layout_width="85dp"
         android:layout_height="40dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
+        android:gravity="center"
         android:text="검색"
         app:layout_constraintBottom_toBottomOf="@id/et_search"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,41 +72,49 @@
     <!-- 이미지 검색 버튼 카드뷰 -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_search"
-        android:layout_width="175dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="165dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="24dp"
         android:layout_marginBottom="12dp"
-        app:cardCornerRadius="8dp"
+        android:backgroundTint="#4682B4 "
+        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_keep"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="NotSibling">
 
-        <Button
+        <TextView
             android:id="@+id/btn_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:text="이미지 검색"
-            android:textSize="15sp" />
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
 
     <!-- 내 보관함 버튼 카드뷰 -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_keep"
-        android:layout_width="175dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="165dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
-        app:cardCornerRadius="8dp"
+        android:backgroundTint="#4682B4 "
+        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <Button
+        <TextView
             android:id="@+id/btn_keep"
             android:layout_width="match_parent"
-            android:layout_height="38dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:text="내 보관함"
-            android:textSize="15sp" />
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

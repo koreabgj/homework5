@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName
 import com.google.type.DateTime
 import com.example.imagesearch.data.ImageMeta as ImageMeta
 
-
 data class Image(val response: ImageResponse)
 
 data class ImageResponse(
@@ -43,11 +42,11 @@ data class ImageDocuments(
     val dateTime: DateTime
 )
 
-val queryMap = hashMapOf(
+val query = hashMapOf(
     "query" to "검색어",
     "sort" to "accuracy", // 정확도 순으로 정렬
     "page" to "1", // 페이지 번호
     "size" to "80" // 한 페이지에 포함될 문서 수
 )
 
-val response = retrofitService.getImageMeta(queryMap)
+val response = retrofitService.getSearchImages(query)
