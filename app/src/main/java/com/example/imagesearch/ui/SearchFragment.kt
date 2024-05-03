@@ -22,7 +22,7 @@ class SearchFragment : Fragment() {
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
 
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
         // Replace this with your data and adapter
         val data = listOf("Item 1", "Item 2", "Item 3")
@@ -30,9 +30,5 @@ class SearchFragment : Fragment() {
         recyclerView.adapter = adapter
 
         return view
-    }
-
-    private fun GridLayoutManager(searchFragment: SearchFragment, i: Int): GridLayoutManager {
-        TODO("Not yet implemented")
     }
 }

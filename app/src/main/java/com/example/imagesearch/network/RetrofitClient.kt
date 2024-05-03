@@ -7,7 +7,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitInstance {
     private const val BASE_URL = "https://dapi.kakao.com"
-    private const val API_KEY = "d7dad5f8832c904973babb0a21d079ab"
+    const val API_KEY = "d7dad5f8832c904973babb0a21d079ab"
 
     private val okHttpClient: OkHttpClient by lazy {
         val httpLoggingInterceptor = HttpLoggingInterceptor()

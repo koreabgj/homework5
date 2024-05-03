@@ -1,5 +1,6 @@
 package com.example.imagesearch.data
 
+import com.example.imagesearch.network.RetrofitInstance
 import com.example.imagesearch.network.RetrofitInstance.retrofitService
 import com.google.gson.annotations.SerializedName
 import com.google.type.DateTime
@@ -11,7 +12,7 @@ data class ImageResponse(
     @SerializedName("meta")
     val ImageMeta: ImageMeta,
     @SerializedName("documents")
-    val ImageDocuments: ImageDocuments
+    val ImageDocuments: ImageDocuments,
 )
 
 data class ImageMeta(
@@ -20,14 +21,14 @@ data class ImageMeta(
     @SerializedName("pageable_count")
     val pageableCount: Int,
     @SerializedName("is_end")
-    val isEnd: Boolean
+    val isEnd: Boolean,
 )
 
 data class ImageDocuments(
     @SerializedName("collection")
     val collection: String,
     @SerializedName("thumbnail_url")
-    val thumbnailUrl: String,
+    val thumbnailUrl: String,  //
     @SerializedName("image_url")
     val imageUrl: String,
     @SerializedName("width")
@@ -35,18 +36,24 @@ data class ImageDocuments(
     @SerializedName("height")
     val height: Int,
     @SerializedName("display_sitename")
-    val displaySiteName: String,
+    val displaySiteName: String,  //
     @SerializedName("doc_url")
     val docUrl: String,
     @SerializedName("datetime")
-    val dateTime: DateTime
+    val dateTime: DateTime,  //
 )
 
-val query = hashMapOf(
+val query: HashMap<String, String> = hashMapOf(
     "query" to "검색어",
     "sort" to "accuracy", // 정확도 순으로 정렬
     "page" to "1", // 페이지 번호
     "size" to "80" // 한 페이지에 포함될 문서 수
 )
 
-val response = retrofitService.getSearchImages(query)
+val response = retrofitService.getSearchImages(
+    Authorization = "KakaoAK ${RetrofitInstance.API_KEY}",
+    query = "검색어",
+    sort = "accuracy",
+    page = 1,
+    size = 80
+)

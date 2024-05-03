@@ -1,5 +1,6 @@
 package com.example.imagesearch.ui
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -12,7 +13,11 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
+import android.util.Log
 import java.io.ByteArrayOutputStream
+import android.view.inputmethod.InputMethodManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.imagesearch.network.RetrofitInstance
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,8 +42,10 @@ class MainActivity : AppCompatActivity() {
             binding.fragmentContainerSearch.visibility = View.GONE
 
             binding.btnExecuteSearch.setOnClickListener {
-                val searchText = binding.etSearch.text.toString()
-                // 네트워크 요청 보내기
+                // 키보드 숨기기
+                hideKeyboard(it)
+                // 검색 실행하고 네트워크 요청 보내기
+                executeSearch(binding.etSearch.text.toString())
             }
         }
 
@@ -46,6 +53,36 @@ class MainActivity : AppCompatActivity() {
         binding.btnKeep.setOnClickListener {
             binding.fragmentContainerKeep.visibility = View.VISIBLE
         }
+    }
+
+    private suspend fun executeSearch(searchQuery: String) {
+        val retrofitService = RetrofitInstance.retrofitService
+        val response = retrofitService.getSearchImages(
+            Authorization = "KakaoAK ${RetrofitInstance.API_KEY}",
+            query = searchQuery,
+            sort = "accuracy",
+            page = 1,
+            size = 20
+        )
+
+        if (response.isSuccessful) {
+//            val imageResponse = response.body()
+//            val imageList = imageResponse.ImageDocuments
+//
+//            // 바인딩된 RecyclerView의 인스턴스를 가져와서 어댑터에 결과를 전달
+//            val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+//            val adapter = recyclerView.adapter as? SearchAdapter
+//            adapter.submitList(imageList)
+        } else {
+            // 네트워크 요청 실패 시 에러 처리
+            Log.e(TAG, "Network request failed: ${response.message()}")
+        }
+    }
+
+
+    private fun hideKeyboard(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     object ImageStorage {

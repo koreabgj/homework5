@@ -15,10 +15,6 @@ class SearchAdapter(private val onClick: List<String>) :
     private var itemList: List<Image> = emptyList()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(inputList: List<Image>) {
-        itemList = inputList
-        notifyDataSetChanged()
-    }
 
     class ViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -46,9 +42,15 @@ class SearchAdapter(private val onClick: List<String>) :
         return itemList.size
     }
 
-    // 이미지를 로드하고 ImageView에 설정하는 함수
     private fun loadImage(url: String, imageView: ImageView) {
         // 실제로는 네트워크 라이브러리를 사용하여 이미지를 가져오기
         // 이미지를 가져오는 코드는 이곳에 작성
+    }
+
+    companion object {
+        fun submitList(inputList: List<Image>) {
+            var itemList = inputList
+//            notifyDataSetChanged()
+        }
     }
 }
