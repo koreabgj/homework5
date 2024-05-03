@@ -26,14 +26,20 @@ class MainActivity : AppCompatActivity() {
         binding.fragmentContainerSearch.visibility = View.GONE
         binding.fragmentContainerKeep.visibility = View.GONE
 
-        // 이미지 검색 버튼 클릭 시 이미지 검색 프래그먼트를 보이도록 합니다.
+        // 이미지 검색 버튼 클릭 시 이미지 검색 프래그먼트를 보이기
         binding.btnSearch.setOnClickListener {
             binding.fragmentContainerSearch.visibility = View.GONE
+
+            binding.etSearch
+            binding.btnExecuteSearch.setOnClickListener {
+                // etSearch에 들어간 내용을 검색 실행
+            }
         }
 
-        // 내 보관함 버튼 클릭 시 내 보관함 프래그먼트를 보이도록 합니다.
+        // 내 보관함 버튼 클릭 시 내 보관함 프래그먼트를 보이기
         binding.btnKeep.setOnClickListener {
             binding.fragmentContainerKeep.visibility = View.VISIBLE
         }
+
     }
 }

@@ -50,4 +50,4 @@ val queryMap = hashMapOf(
     "size" to "80" // 한 페이지에 포함될 문서 수
 )
 
-val response = retrofitService.getImageData(queryMap)
+val response = retrofitService.getImageMeta(queryMap)
