@@ -66,19 +66,18 @@ class MainActivity : AppCompatActivity() {
         )
 
         if (response.isSuccessful) {
-//            val imageResponse = response.body()
-//            val imageList = imageResponse.ImageDocuments
-//
-//            // 바인딩된 RecyclerView의 인스턴스를 가져와서 어댑터에 결과를 전달
-//            val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-//            val adapter = recyclerView.adapter as? SearchAdapter
-//            adapter.submitList(imageList)
+            val imageResponse = response.body()
+            val itemList = imageResponse?.ImageDocuments
+
+            // 바인딩된 RecyclerView의 인스턴스를 가져와서 어댑터에 결과를 전달
+            val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+            val adapter = recyclerView.adapter as? SearchAdapter
+            SearchAdapter.submitList()
         } else {
             // 네트워크 요청 실패 시 에러 처리
             Log.e(TAG, "Network request failed: ${response.message()}")
         }
     }
-
 
     private fun hideKeyboard(view: View) {
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

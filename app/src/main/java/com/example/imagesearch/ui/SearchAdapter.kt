@@ -1,28 +1,37 @@
 package com.example.imagesearch.ui
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.imagesearch.data.Image
 import com.example.imagesearch.databinding.ItemLayoutBinding
-import com.example.imagesearch.ui.MainActivity.ImageStorage.loadImage
+import com.example.imagesearch.data.ImageDocuments
+import com.bumptech.glide.Glide
 
 class SearchAdapter(private val onClick: List<String>) :
     RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
-    private var itemList: List<Image> = emptyList()
-
-    @SuppressLint("NotifyDataSetChanged")
+    private var itemList: List<ImageDocuments> = emptyList()
 
     class ViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Image) {
+        fun bind(item: ImageDocuments) {
             binding.apply {
-//                loadImage(url, ivItem) // 이미지의 URL을 전달하여 loadImage 함수 호출
-                root.setOnClickListener { }
+                // 이미지 썸네일 로드
+                Glide.with(itemView.context)
+                    .load(item.thumbnailUrl)
+                    .into(ivThumbnail)
+
+                // 이미지 소스 (display_sitename)
+                tvSite.text = item.displaySiteName
+
+                // 이미지 업로드 날짜 및 시간
+                tvDatetime.text = item.dateTime.toString()
+
+                // 아이템 클릭 이벤트 처리
+                root.setOnClickListener {
+                    // 클릭 이벤트 처리 코드 작성
+                }
             }
         }
     }
@@ -42,15 +51,13 @@ class SearchAdapter(private val onClick: List<String>) :
         return itemList.size
     }
 
-    private fun loadImage(url: String, imageView: ImageView) {
-        // 실제로는 네트워크 라이브러리를 사용하여 이미지를 가져오기
-        // 이미지를 가져오는 코드는 이곳에 작성
-    }
-
     companion object {
-        fun submitList(inputList: List<Image>) {
-            var itemList = inputList
-//            notifyDataSetChanged()
+        fun submitList() {
+            notifyDataSetChanged()
+        }
+
+        private fun notifyDataSetChanged() {
+            notifyDataSetChanged()
         }
     }
 }
