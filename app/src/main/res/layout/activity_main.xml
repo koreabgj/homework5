@@ -11,8 +11,11 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="620dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
         android:padding="8dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/card_search"
         app:layout_constraintTop_toBottomOf="@+id/et_search"
         tools:listitem="@layout/item_layout" />
 
@@ -31,7 +34,7 @@
         android:id="@+id/et_search"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:hint="검색어를 입력하세요"
         android:imeOptions="actionSearch"
         android:inputType="text"
@@ -96,7 +99,7 @@
         <Button
             android:id="@+id/btn_keep"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="38dp"
             android:text="내 보관함"
             android:textSize="15sp" />
     </androidx.cardview.widget.CardView>

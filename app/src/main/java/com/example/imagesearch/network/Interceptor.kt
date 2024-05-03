@@ -7,11 +7,11 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 
 val loggingInterceptor = HttpLoggingInterceptor().apply {
-    level = HttpLoggingInterceptor.Level.BODY // 로깅 레벨 설정
+    level = HttpLoggingInterceptor.Level.BODY
 }
 
 val client = OkHttpClient.Builder()
-    .addInterceptor(loggingInterceptor) // 로깅 인터셉터 추가
+    .addInterceptor(loggingInterceptor)
     .build()
 
 val retrofit = Retrofit.Builder()

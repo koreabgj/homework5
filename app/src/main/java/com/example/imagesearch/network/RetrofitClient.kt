@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitInstance {
-    const val API_KEY = "마이페이지 -> 인증키 발급 내역"
+    const val API_KEY = "d7dad5f8832c904973babb0a21d079ab"
 
     private val okHttpClient: OkHttpClient by lazy {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -20,7 +20,7 @@ object RetrofitInstance {
         Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
             .client(okHttpClient)    // Logcat에서 패킷 내용을 로그로 남기는 속성
-            .baseUrl("https://openapi.gg.go.kr/")
+            .baseUrl("https://dapi.kakao.com")
             .build()
     }
 
