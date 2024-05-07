@@ -1,3 +1,5 @@
+package com.example.imagesearch.ui
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -5,7 +7,8 @@ import com.bumptech.glide.Glide
 import com.example.imagesearch.databinding.ItemLayoutBinding
 
 class KeepAdapter(
-    private val imageUrlList: List<String>
+    private val imageUrlList: List<String>,
+    private val itemClickListener: OnItemClickListener,
 ) : RecyclerView.Adapter<KeepAdapter.ImageViewHolder>() {
 
     interface OnItemClickListener {
@@ -15,16 +18,17 @@ class KeepAdapter(
     inner class ImageViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        init {
+            binding.root.setOnClickListener {
+                val imageUrl = imageUrlList[adapterPosition] // 아이템의 위치에 맞는 imageUrl
+                itemClickListener.onItemClick(imageUrl)
+            }
+        }
+
         fun bind(imageUrl: String) {
-            // 이미지 로드
             Glide.with(itemView.context)
                 .load(imageUrl)
                 .into(binding.ivThumbnail)
-
-            // 이미지 클릭 시 이벤트 처리
-            binding.root.setOnClickListener {
-                itemClickListener.onItemClick(imageUrl)
-            }
         }
     }
 

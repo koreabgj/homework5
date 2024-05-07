@@ -1,6 +1,6 @@
 package com.example.imagesearch.network
 
-import SearchResponse
+import com.example.imagesearch.data.SearchResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

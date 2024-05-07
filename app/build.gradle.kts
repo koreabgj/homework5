@@ -44,7 +44,6 @@ android {
 
 dependencies {
 
-    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
@@ -53,7 +52,6 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
-    implementation("com.github.skydoves:powerspinner:1.2.6")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.activity:activity-ktx:1.4.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
