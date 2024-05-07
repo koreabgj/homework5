@@ -13,6 +13,9 @@ import com.example.imagesearch.R
 
 class SearchFragment : Fragment() {
 
+    private val imageUrls = listOf(
+        "https://dapi.kakao.com"
+    )
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,9 +27,7 @@ class SearchFragment : Fragment() {
 
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        // Replace this with your data and adapter
-        val data = listOf("Item 1", "Item 2", "Item 3")
-        val adapter = SearchAdapter(data)
+        val adapter = SearchAdapter(imageUrls)
         recyclerView.adapter = adapter
 
         return view

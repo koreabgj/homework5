@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.material3.android)
     implementation(libs.cronet.embedded)
     implementation(libs.play.services.ads.lite)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation("com.squareup.retrofit2:retrofit:2.11.0")

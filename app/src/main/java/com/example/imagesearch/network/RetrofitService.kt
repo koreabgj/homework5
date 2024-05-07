@@ -1,6 +1,7 @@
 package com.example.imagesearch.network
 
 import SearchResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -8,12 +9,12 @@ object RetrofitService {
     interface RetrofitService {
         @GET("search/image")
         suspend fun getSearchImages(
-            @Query("Authorization") authorization: String,
+            @Query("Authorization") apiKey: String,
             @Query("query") query: String,
             @Query("sort") sort: String,
             @Query("page") page: Int,
             @Query("size") size: Int,
-        ): SearchResponse
+        ): Response<SearchResponse>
 
         fun getSearchImages(authorization: String): SearchResponse
     }
@@ -29,5 +30,11 @@ object RetrofitService {
         return instance!!
     }
 
-    fun getSearchImages(authorization: String, query: String, sort: String, page: Int, size: Int) {}
+    fun getSearchImages(
+        authorization: String,
+        query: String,
+        sort: String,
+        page: Int,
+        size: Int,
+    ) {}
 }
