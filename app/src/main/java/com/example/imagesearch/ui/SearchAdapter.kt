@@ -42,20 +42,20 @@ class SearchAdapter(
                     }
                 }
 
-                // 좋아요 상태에 따라 UI 업데이트
-                if (image.isLiked) {
-                    binding.ivLike.setImageResource(R.drawable.ic_liked)
-                } else {
-                    binding.ivLike.setImageResource(R.drawable.ic_unliked)
-                }
-
-                // 좋아요 아이콘 클릭 시 이벤트 처리
-                binding.ivLike.setOnClickListener {
-                    val position = adapterPosition
-                    if (position != RecyclerView.NO_POSITION) {
-                        itemClickListener.onItemClick(imageUrl = "", position)
-                    }
-                }
+//                // 좋아요 상태에 따라 UI 업데이트
+//                if (image.isLiked) {
+//                    binding.ivLike.setImageResource(R.drawable.ic_liked)
+//                } else {
+//                    binding.ivLike.setImageResource(R.drawable.ic_unliked)
+//                }
+//
+//                // 좋아요 아이콘 클릭 시 이벤트 처리
+//                binding.ivLike.setOnClickListener {
+//                    val position = adapterPosition
+//                    if (position != RecyclerView.NO_POSITION) {
+//                        itemClickListener.onItemClick(imageUrl = "", position)
+//                    }
+//                }
 
             }
         }

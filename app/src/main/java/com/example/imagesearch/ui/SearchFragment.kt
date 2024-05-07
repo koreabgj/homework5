@@ -16,13 +16,10 @@ class SearchFragment : Fragment() {
         "https://dapi.kakao.com"
     )
 
-    private lateinit var searchAdapter: SearchAdapter
-
     companion object {
-        const val IMAGE_URLS_KEY = "image_urls"
+        const val IMAGE_URLS_KEY = "https://dapi.kakao.com"
 
         fun submitList(images: List<SearchResponse>?) {
-            // 이미지 어댑터에 이미지 목록을 전달하여 업데이트
             submitList(images)
         }
     }
@@ -32,7 +29,7 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
 
-        val bundle = Bundle().apply {
+        Bundle().apply {
             putStringArrayList(IMAGE_URLS_KEY, ArrayList(imageUrls))
         }
 

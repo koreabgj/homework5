@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.imagesearch.R
 
 class KeepFragment : Fragment() {
+
     private lateinit var keepFragmentImageUrls: List<String>
 
     private val imageUrlList = mutableListOf(
@@ -17,7 +18,7 @@ class KeepFragment : Fragment() {
     )
 
     companion object {
-        const val IMAGE_URLS_KEY = "image_urls"
+        const val IMAGE_URLS_KEY = "https://dapi.kakao.com"
     }
 
     override fun onCreateView(
