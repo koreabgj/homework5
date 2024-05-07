@@ -8,7 +8,7 @@ class Repository {
         query: String,
         sort: String,
         page: Int,
-        size: Int,
+        size: Int
     ) {
         try {
             val response = retrofitService.getSearchImages(
