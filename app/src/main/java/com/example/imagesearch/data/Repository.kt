@@ -1,6 +1,7 @@
 package com.example.imagesearch.data
 
 import com.example.imagesearch.network.RetrofitClient.RetrofitInstance.retrofitService
+import retrofit2.Response
 
 class Repository {
     suspend fun searchImages(
@@ -8,10 +9,10 @@ class Repository {
         query: String,
         sort: String,
         page: Int,
-        size: Int
-    ) {
+        size: Int,
+    ): Response<SearchResponse> {
         try {
-            val response = retrofitService.getSearchImages(
+            return retrofitService.getSearchImages(
                 authorization = "KakaoAK $apiKey",
                 query = query,
                 sort = sort,

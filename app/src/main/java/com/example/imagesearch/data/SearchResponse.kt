@@ -6,9 +6,9 @@ import com.example.imagesearch.data.ImageMeta as ImageMeta
 
 data class SearchResponse(
     @SerializedName("meta")
-    val ImageMeta: ImageMeta,
+    val imageMeta: ImageMeta,
     @SerializedName("documents")
-    val ImageDocuments: ImageDocuments
+    val imageDocuments: ImageDocuments
 )
 
 data class ImageMeta(

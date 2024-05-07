@@ -22,8 +22,8 @@ import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,13 +50,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnSearch.setOnClickListener {
-            setLastSearchToSearchField()
-            searchImages()
+            binding.fragmentContainerSearch.visibility = View.VISIBLE
         }
 
         binding.btnExecuteSearch.setOnClickListener {
-            hideKeyboard(it)
             searchImages()
+            setLastSearchToSearchField()
+            hideKeyboard(it)
         }
 
         binding.btnKeep.setOnClickListener {
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     private fun observeViewModel() {
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
         viewModel.searchResults.observe(this, Observer { images ->
             SearchFragment.submitList(images)
         })
