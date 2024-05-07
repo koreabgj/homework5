@@ -44,12 +44,8 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.tracing.perfetto.handshake)
-    implementation(libs.androidx.material3.android)
-    implementation(libs.cronet.embedded)
-    implementation(libs.play.services.ads.lite)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
@@ -62,6 +58,11 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.4.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation(libs.androidx.tracing.perfetto.handshake)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.cronet.embedded)
+    implementation(libs.play.services.ads.lite)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

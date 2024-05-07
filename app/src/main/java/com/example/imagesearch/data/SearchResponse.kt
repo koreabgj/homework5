@@ -10,7 +10,7 @@ data class SearchResponse(
     @SerializedName("meta")
     val ImageMeta: ImageMeta,
     @SerializedName("documents")
-    val ImageDocuments: ImageDocuments,
+    val ImageDocuments: ImageDocuments
 )
 
 data class ImageMeta(
@@ -19,26 +19,26 @@ data class ImageMeta(
     @SerializedName("pageable_count")
     val pageableCount: Int,
     @SerializedName("is_end")
-    val isEnd: Boolean,
+    val isEnd: Boolean
 )
 
 data class ImageDocuments(
-    @SerializedName("collection")
-    val collection: String,
+//    @SerializedName("collection")
+//    val collection: String,
     @SerializedName("thumbnail_url")
-    val thumbnailUrl: String,  //
-    @SerializedName("image_url")
-    val imageUrl: String,
-    @SerializedName("width")
-    val width: Int,
-    @SerializedName("height")
-    val height: Int,
+    val thumbnailUrl: String,
+//    @SerializedName("image_url")
+//    val imageUrl: String,
+//    @SerializedName("width")
+//    val width: Int,
+//    @SerializedName("height")
+//    val height: Int,
     @SerializedName("display_sitename")
-    val displaySiteName: String,  //
-    @SerializedName("doc_url")
-    val docUrl: String,
+    val displaySiteName: String,
+//    @SerializedName("doc_url")
+//    val docUrl: String,
     @SerializedName("datetime")
-    val dateTime: DateTime,  //
+    val dateTime: DateTime
 )
 
 val query: HashMap<String, String> = hashMapOf(
