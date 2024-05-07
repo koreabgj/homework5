@@ -1,6 +1,6 @@
 package com.example.imagesearch.ui
 
-import android.content.ContentValues.TAG
+import SearchAdapter
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -14,7 +14,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.system.Os.remove
 import android.util.Base64
-import android.util.Log
 import java.io.ByteArrayOutputStream
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -23,9 +22,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imagesearch.data.Repository
-import com.example.imagesearch.network.RetrofitClient
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
@@ -44,6 +41,10 @@ class MainActivity : AppCompatActivity() {
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // RecyclerView 초기화
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        recyclerView.adapter
 
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
@@ -68,29 +69,37 @@ class MainActivity : AppCompatActivity() {
             binding.btnExecuteSearch.setOnClickListener {
                 // 키보드 숨기기
                 hideKeyboard(it)
-                // 검색 실행하고 네트워크 요청 보내기
+
+                // 검색어 가져오기
                 val searchQuery = binding.etSearch.text.toString()
-                viewModel.getSearchImages(searchQuery)
+
+                // 이미지 검색 실행
+                viewModel.searchImages(
+                    apiKey = "d7dad5f8832c904973babb0a21d079ab",
+                    query = searchQuery,
+                    sort = "accuracy",
+                    page = 1,
+                    size = 80
+                )
             }
 
-            viewModel.searchResultsLiveData(this, Observer {
-                // 검색 결과를 받아서 UI에 표시하는 작업 수행
+            setUpImageClickListener()
+            removeSelectedImages()
+
+            val dateTime by lazy { }
+            formatDateTime(dateTime)
+
+            // 이미지 데이터를 관찰하여 UI를 업데이트
+            viewModel.searchResults.observe(this, Observer { images ->
+                SearchFragment.submitList(images)
             })
         }
-
-        setUpImageClickListener()
-//        formatDateTime(dateTime: Date))
-//        onImageClicked(imageUrl: String)
-        removeSelectedImages()
 
         // 내 보관함 버튼 클릭 시 내 보관함 프래그먼트를 보이기
         binding.btnKeep.setOnClickListener {
             binding.fragmentContainerKeep.visibility = View.VISIBLE
 
-            // 이미지 선택 버튼 클릭 시 선택된 이미지 제거
-//            binding.btnRemoveSelectedImages.setOnClickListener {
-//                removeSelectedImages()
-//            }
+            // todo: 보관된 이미지를 선택하면 해당 이미지를 제거하는 리스너 설정
         }
     }
 
@@ -115,7 +124,6 @@ class MainActivity : AppCompatActivity() {
         val lastSearch = getLastSearch(context)
         if (!lastSearch.isNullOrEmpty()) {
             searchEditText.setText(lastSearch)
-            // 커서를 검색창 입력 필드의 끝으로 이동
             searchEditText.setSelection(lastSearch.length)
         }
     }
@@ -125,11 +133,11 @@ class MainActivity : AppCompatActivity() {
         saveLastSearch(context, searchQuery)
     }
 
+    // 이미지를 클릭했을 때 호출되는 메서드
     private fun setUpImageClickListener() {
-        val imageView = findViewById<ImageView>(R.id.imageView)
+        val imageView = findViewById<ImageView>(R.id.iv_thumbnail)
         imageView.setOnClickListener {
             val imageUrl = "https://dapi.kakao.com"
-
             if (selectedImages.contains(imageUrl)) {
                 selectedImages.remove(imageUrl)
             } else {
@@ -138,51 +146,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // 이미지를 클릭했을 때 호출되는 메서드
-    private fun onImageClicked(imageUrl: String) {
-        if (selectedImages.contains(imageUrl)) {
-            selectedImages.remove(imageUrl)
-        } else {
-            selectedImages.add(imageUrl)
-        }
-    }
-
     // 선택된 이미지를 제거하는 버튼 클릭 시 호출되는 메서드
     private fun removeSelectedImages() {
         selectedImages.forEach { imageUrl ->
-            // 이미지 제거 작업 수행
-
-            // UI에서 선택한 이미지 제거 (예: RecyclerView에서 해당 아이템 제거)
             val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
             val adapter = recyclerView.adapter
             remove(imageUrl)
         }
-
         selectedImages.clear() // 선택된 이미지 목록 초기화
-    }
-
-    private fun executeSearch(searchQuery: String) {
-        val retrofitService = RetrofitClient.RetrofitInstance.retrofitService
-        val response = retrofitService.getSearchImages(
-            authorization = "KakaoAK ${RetrofitClient.RetrofitInstance.API_KEY}",
-            query = searchQuery,
-            sort = "accuracy",
-            page = 1,
-            size = 80 // 최대 80개의 결과를 요청
-        )
-
-        if (response.isSuccessful) {
-            val itemList = response
-
-            // 바인딩된 RecyclerView의 인스턴스를 가져와서 어댑터에 결과를 전달
-            val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-            val adapter = recyclerView.adapter as? SearchAdapter
-            adapter?.itemList // itemList를 어댑터에 할당
-
-        } else {
-            // 네트워크 요청 실패 시 에러 처리
-            Log.e(TAG, "Network request failed")
-        }
     }
 
     private fun hideKeyboard(view: View) {
@@ -190,12 +161,10 @@ class MainActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    // 특정 날짜와 시간을 포맷에 맞게 변환하는 함수
-    private fun formatDateTime(dateTime: Date): String {
+    private fun formatDateTime(dateTime: Unit): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         return dateFormat.format(dateTime)
     }
-
 
     object ImageStorage {
 

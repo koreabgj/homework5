@@ -1,18 +1,22 @@
-package com.example.imagesearch.ui
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.imagesearch.databinding.ItemLayoutBinding
-import com.example.imagesearch.data.ImageDocuments
 import com.bumptech.glide.Glide
+import com.example.imagesearch.data.ImageDocuments
+import com.example.imagesearch.databinding.ItemLayoutBinding
 
-class SearchAdapter(private val onClick: List<String>) :
+class SearchAdapter(
+    private val itemClickListener: OnItemClickListener, // 아이템 클릭 리스너 추가
+    private var itemList: List<ImageDocuments> = emptyList()
+) :
     RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
-    var itemList: List<ImageDocuments> = emptyList()
+    // 아이템 클릭 리스너 인터페이스 정의
+    interface OnItemClickListener {
+        fun onItemClick(imageUrl: String)
+    }
 
-    class ViewHolder(private val binding: ItemLayoutBinding) :
+    inner class ViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ImageDocuments) {
@@ -30,15 +34,15 @@ class SearchAdapter(private val onClick: List<String>) :
 
                 // 아이템 클릭 이벤트 처리
                 root.setOnClickListener {
-                    // 클릭 이벤트 처리 코드 작성
+                    val imageUrl = item.imageUrl
+                    itemClickListener.onItemClick(imageUrl)
                 }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding =
-            ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -49,15 +53,5 @@ class SearchAdapter(private val onClick: List<String>) :
 
     override fun getItemCount(): Int {
         return itemList.size
-    }
-
-    companion object {
-        fun submitList() {
-            notifyDataSetChanged()
-        }
-
-        private fun notifyDataSetChanged() {
-            notifyDataSetChanged()
-        }
     }
 }

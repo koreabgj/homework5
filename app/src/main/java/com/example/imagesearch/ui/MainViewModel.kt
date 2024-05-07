@@ -2,42 +2,50 @@ package com.example.imagesearch.ui
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.imagesearch.data.SearchResponse
+import com.example.imagesearch.data.ImageDocuments
 import com.example.imagesearch.data.Repository
+import com.example.imagesearch.data.SearchResponse
 import kotlinx.coroutines.launch
 
+class MainViewModel(private val repository: Repository) : ViewModel() {
 
-class MainViewModel(private val retrofitService: Repository) : ViewModel() {
-    fun getSearchImages(searchQuery: String) {
-        // Retrofit 서비스를 사용하여 이미지 검색을 시작하고 결과를 처리하는 비동기 작업 수행
-        viewModelScope.launch {
-            try {
-                // 네트워크 요청 보내기
-                val response = Repository.searchImages(searchQuery)
-                // 요청 결과를 LiveData에 업데이트
-                _getSearchImageLiveData.value = response
-            } catch (e: Exception) {
-                // 오류 처리
-                Log.e(TAG, "Error fetching search images: $e")
-            }
+    // 선택된 이미지 리스트를 저장하는 LiveData
+    private val _selectedImages = MutableLiveData<List<String>>()
+    val selectedImages: LiveData<List<String>> get() = _selectedImages
+
+    // 이미지 검색 결과를 저장하는 LiveData
+    private val _searchResults = MutableLiveData<List<SearchResponse>>()
+    val searchResults: LiveData<List<SearchResponse>> get() = _searchResults
+
+    // 이미지 검색을 실행하는 메서드
+    suspend fun searchImages(apiKey: String, query: String, sort: String, page: Int, size: Int) {
+        try {
+            val response = repository.searchImages(apiKey, query, sort, page, size)
+            // 검색 결과에 대한 처리를 여기에 추가할 수 있습니다.
+        } catch (e: Exception) {
+            Log.e(TAG, "Error fetching search images: $e")
+            // 예외 처리를 할 수도 있습니다.
         }
     }
 
-    fun searchResultsLiveData(mainActivity: MainActivity, observer: Observer<List<SearchResponse>>) {
-        // LiveData를 MainActivity와 연결
-        getSearchImageLiveData.observe(mainActivity, observer)
+    // 이미지를 선택하는 메서드
+    fun addSelectedImage(imageUrl: String) {
+        val currentList = _selectedImages.value ?: emptyList()
+        _selectedImages.value = currentList + imageUrl
     }
 
-
-    val searchResultsLiveData by lazy {  }
-    private val _getSearchImageLiveData: MutableLiveData<List<SearchResponse>> = MutableLiveData()
-    val getSearchImageLiveData: MutableLiveData<List<SearchResponse>> get() = _getSearchImageLiveData
+    // 선택된 이미지를 제거하는 메서드
+    fun removeSelectedImage(imageUrl: String) {
+        val currentList = _selectedImages.value ?: emptyList()
+        _selectedImages.value = currentList - imageUrl
+    }
 }
+
 
 class MainViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

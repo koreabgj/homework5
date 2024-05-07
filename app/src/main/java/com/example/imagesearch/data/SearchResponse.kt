@@ -1,7 +1,5 @@
 package com.example.imagesearch.data
 
-import com.example.imagesearch.network.RetrofitClient
-import com.example.imagesearch.network.RetrofitClient.RetrofitInstance.retrofitService
 import com.google.gson.annotations.SerializedName
 import com.google.type.DateTime
 import com.example.imagesearch.data.ImageMeta as ImageMeta
@@ -27,8 +25,8 @@ data class ImageDocuments(
 //    val collection: String,
     @SerializedName("thumbnail_url")
     val thumbnailUrl: String,
-//    @SerializedName("image_url")
-//    val imageUrl: String,
+    @SerializedName("image_url")
+    val imageUrl: String,
 //    @SerializedName("width")
 //    val width: Int,
 //    @SerializedName("height")
@@ -41,17 +39,9 @@ data class ImageDocuments(
     val dateTime: DateTime
 )
 
-val query: HashMap<String, String> = hashMapOf(
+val queryMap: HashMap<String, String> = hashMapOf(
     "query" to "검색어",
     "sort" to "accuracy", // 정확도 순으로 정렬
     "page" to "1", // 페이지 번호
     "size" to "80" // 한 페이지에 포함될 문서 수
-)
-
-val response = retrofitService.getSearchImages(
-    authorization = "KakaoAK ${RetrofitClient.RetrofitInstance.API_KEY}",
-    query = "검색어",
-    sort = "accuracy",
-    page = 1,
-    size = 80
 )
