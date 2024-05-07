@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 class SearchAdapter(private val onClick: List<String>) :
     RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
-    private var itemList: List<ImageDocuments> = emptyList()
+    var itemList: List<ImageDocuments> = emptyList()
 
     class ViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {

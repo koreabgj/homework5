@@ -1,14 +1,12 @@
 package com.example.imagesearch.data
 
-import com.example.imagesearch.network.RetrofitInstance
-import com.example.imagesearch.network.RetrofitInstance.retrofitService
+import com.example.imagesearch.network.RetrofitClient
+import com.example.imagesearch.network.RetrofitClient.RetrofitInstance.retrofitService
 import com.google.gson.annotations.SerializedName
 import com.google.type.DateTime
 import com.example.imagesearch.data.ImageMeta as ImageMeta
 
-data class Image(val response: ImageResponse)
-
-data class ImageResponse(
+data class SearchResponse(
     @SerializedName("meta")
     val ImageMeta: ImageMeta,
     @SerializedName("documents")
@@ -51,7 +49,7 @@ val query: HashMap<String, String> = hashMapOf(
 )
 
 val response = retrofitService.getSearchImages(
-    Authorization = "KakaoAK ${RetrofitInstance.API_KEY}",
+    authorization = "KakaoAK ${RetrofitClient.RetrofitInstance.API_KEY}",
     query = "검색어",
     sort = "accuracy",
     page = 1,

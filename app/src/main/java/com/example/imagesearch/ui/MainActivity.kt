@@ -12,15 +12,19 @@ import com.example.imagesearch.databinding.ActivityMainBinding
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.system.Os.remove
 import android.util.Base64
 import android.util.Log
 import java.io.ByteArrayOutputStream
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.imagesearch.network.RetrofitInstance
-
+import com.example.imagesearch.network.RetrofitClient
+import com.google.android.gms.ads.mediation.Adapter
 
 class MainActivity : AppCompatActivity() {
+
+    private val selectedImages: MutableList<String> = mutableListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -45,20 +49,49 @@ class MainActivity : AppCompatActivity() {
                 // 키보드 숨기기
                 hideKeyboard(it)
                 // 검색 실행하고 네트워크 요청 보내기
-                executeSearch(binding.etSearch.text.toString())
+                var searchQuery = binding.etSearch.text.toString()
+                executeSearch(searchQuery)
             }
         }
 
         // 내 보관함 버튼 클릭 시 내 보관함 프래그먼트를 보이기
         binding.btnKeep.setOnClickListener {
             binding.fragmentContainerKeep.visibility = View.VISIBLE
+
+            // 이미지 선택 버튼 클릭 시 선택된 이미지 제거
+//            binding.btnRemoveSelectedImages.setOnClickListener {
+//                removeSelectedImages()
+//            }
         }
     }
 
-    private suspend fun executeSearch(searchQuery: String) {
-        val retrofitService = RetrofitInstance.retrofitService
+    // 이미지를 클릭했을 때 호출되는 메서드
+    private fun onImageClicked(imageUrl: String) {
+        if (selectedImages.contains(imageUrl)) {
+            selectedImages.remove(imageUrl)
+        } else {
+            selectedImages.add(imageUrl)
+        }
+    }
+
+    // 선택된 이미지를 제거하는 버튼 클릭 시 호출되는 메서드
+    private fun removeSelectedImages() {
+        selectedImages.forEach { imageUrl ->
+            // 이미지 제거 작업 수행 (예: 파일 삭제 등)
+
+            // UI에서 선택한 이미지 제거 (예: RecyclerView에서 해당 아이템 제거)
+            val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+            val adapter = recyclerView.adapter
+            remove(imageUrl)
+        }
+
+        selectedImages.clear() // 선택된 이미지 목록 초기화
+    }
+
+    private fun executeSearch(searchQuery: String) {
+        val retrofitService = RetrofitClient.RetrofitInstance.retrofitService
         val response = retrofitService.getSearchImages(
-            Authorization = "KakaoAK ${RetrofitInstance.API_KEY}",
+            authorization = "KakaoAK ${RetrofitClient.RetrofitInstance.API_KEY}",
             query = searchQuery,
             sort = "accuracy",
             page = 1,
@@ -66,16 +99,16 @@ class MainActivity : AppCompatActivity() {
         )
 
         if (response.isSuccessful) {
-            val imageResponse = response.body()
-            val itemList = imageResponse?.ImageDocuments
+            val itemList = response
 
             // 바인딩된 RecyclerView의 인스턴스를 가져와서 어댑터에 결과를 전달
             val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
             val adapter = recyclerView.adapter as? SearchAdapter
-            SearchAdapter.submitList()
+            adapter?.itemList // itemList를 어댑터에 할당
+
         } else {
             // 네트워크 요청 실패 시 에러 처리
-            Log.e(TAG, "Network request failed: ${response.message()}")
+            Log.e(TAG, "Network request failed")
         }
     }
 

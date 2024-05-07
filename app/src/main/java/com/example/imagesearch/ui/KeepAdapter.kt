@@ -1,0 +1,37 @@
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.imagesearch.databinding.ItemLayoutBinding
+
+class KeepAdapter(private val imageList: List<String>) :
+    RecyclerView.Adapter<KeepAdapter.ImageViewHolder>() {
+
+    inner class ImageViewHolder(private val binding: ItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(imageUrl: String) {
+            Glide.with(itemView.context)
+                .load(imageUrl)
+                .into(binding.ivThumbnail)
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
+        val binding = ItemLayoutBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return ImageViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
+        val imageUrl = imageList[position]
+        holder.bind(imageUrl)
+    }
+
+    override fun getItemCount(): Int {
+        return imageList.size
+    }
+}
