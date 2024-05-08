@@ -13,11 +13,11 @@ class Repository {
     ): Response<SearchResponse> {
         try {
             return retrofitService.getSearchImages(
-                authorization = "KakaoAK $apiKey",
-                query = query,
-                sort = sort,
-                page = page,
-                size = size
+                authorization = "KakaoAK d7dad5f8832c904973babb0a21d079ab",
+                query = "검색어",
+                sort = "accuracy",
+                page = 1,
+                size = 80
             )
         } catch (e: Exception) {
             throw e
