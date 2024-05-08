@@ -7,11 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.imagesearch.databinding.ActivityMainBinding
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.util.Base64
-import java.io.ByteArrayOutputStream
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -147,32 +142,4 @@ class MainActivity : AppCompatActivity() {
         private const val PREFS_NAME = "SearchPrefs"
         private const val LAST_SEARCH_KEY = "last_search"
     }
-
-//    object ImageStorage {
-//
-//        private const val PREFS_NAME = "image_prefs"
-//        private const val KEY_IMAGE = "image"
-//
-//        // 이미지를 Base64 문자열로 인코딩하여 저장
-//        fun saveImage(context: Context, bitmap: Bitmap) {
-//            val editor = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit()
-//            val byteArrayOutputStream = ByteArrayOutputStream()
-//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-//            val imageBytes = byteArrayOutputStream.toByteArray()
-//            val imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT)
-//            editor.putString(KEY_IMAGE, imageString)
-//            editor.apply()
-//        }
-//
-//        // 저장된 Base64 문자열을 디코딩하여 이미지를 불러옴
-//        fun loadImage(context: Context): Bitmap? {
-//            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-//            val imageString = prefs.getString(KEY_IMAGE, null)
-//            if (imageString != null) {
-//                val imageBytes = Base64.decode(imageString, Base64.DEFAULT)
-//                return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-//            }
-//            return null
-//        }
-//    }
 }

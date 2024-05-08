@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imagesearch.R
-import com.example.imagesearch.data.SearchResponse
 
 class SearchFragment : Fragment() {
 

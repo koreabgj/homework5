@@ -24,7 +24,7 @@ class Repository {
                 null
             }
         } catch (e: Exception) {
-            null
+            throw e
         }
     }
 }
