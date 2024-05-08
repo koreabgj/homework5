@@ -38,10 +38,3 @@ data class ImageDocuments(
     @SerializedName("datetime") //
     val dateTime: DateTime
 )
-
-//val queryMap: HashMap<String, String> = hashMapOf(
-//    "query" to "검색어",
-//    "sort" to "accuracy", // 정확도 순으로 정렬
-//    "page" to "1", // 페이지 번호
-//    "size" to "80" // 한 페이지에 포함될 문서 수
-//)

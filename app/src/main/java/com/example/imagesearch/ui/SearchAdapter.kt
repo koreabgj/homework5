@@ -11,8 +11,7 @@ import com.example.imagesearch.databinding.ItemLayoutBinding
 class SearchAdapter(
     private val itemClickListener: OnItemClickListener,
     private var itemList: List<ImageDocuments> = emptyList(),
-) :
-    RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
         fun onItemClick(imageUrl: String, position: Int)

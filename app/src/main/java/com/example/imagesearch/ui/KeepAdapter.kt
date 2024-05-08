@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.imagesearch.data.ImageDocuments
 import com.example.imagesearch.databinding.ItemLayoutBinding
 
 class KeepAdapter(
-    private val imageUrlList: List<String>,
     private val itemClickListener: OnItemClickListener,
+    private val imageUrlList: List<String> = emptyList(),
 ) : RecyclerView.Adapter<KeepAdapter.ImageViewHolder>() {
 
     interface OnItemClickListener {
