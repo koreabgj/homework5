@@ -21,6 +21,8 @@ class SearchAdapter(
     inner class ViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        private var isClickEvent = false
+
         fun bind(item: ImageDocuments) {
             binding.apply {
                 // 이미지 썸네일
@@ -42,21 +44,19 @@ class SearchAdapter(
                     }
                 }
 
-//                // 좋아요 상태에 따라 UI 업데이트
-//                if (image.isLiked) {
-//                    binding.ivLike.setImageResource(R.drawable.ic_liked)
-//                } else {
-//                    binding.ivLike.setImageResource(R.drawable.ic_unliked)
-//                }
-//
-//                // 좋아요 아이콘 클릭 시 이벤트 처리
-//                binding.ivLike.setOnClickListener {
-//                    val position = adapterPosition
-//                    if (position != RecyclerView.NO_POSITION) {
-//                        itemClickListener.onItemClick(imageUrl = "", position)
-//                    }
-//                }
+                // 좋아요 클릭시 이벤트 처리 & 좋아요 상태에 따라 UI 업데이트
+                binding.ivLike.setOnClickListener {
+                    if (isClickEvent) {
+                        ivLike.setImageResource(R.drawable.img_favorite)
+                    } else {
+                        ivLike.setImageResource(R.drawable.img_empty_favorite)
+                    }
 
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        itemClickListener.onItemClick(imageUrl = "", position)
+                    }
+                }
             }
         }
     }
