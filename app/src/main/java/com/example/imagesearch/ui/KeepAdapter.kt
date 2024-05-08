@@ -20,7 +20,7 @@ class KeepAdapter(
 
         init {
             binding.root.setOnClickListener {
-                val thumbnailUrl = thumbnailUrlList[adapterPosition] // 아이템의 위치에 맞는 imageUrl
+                val thumbnailUrl = thumbnailUrlList[adapterPosition]
                 itemClickListener.onItemClick(thumbnailUrl)
             }
         }

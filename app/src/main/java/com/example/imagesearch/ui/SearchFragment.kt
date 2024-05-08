@@ -12,12 +12,10 @@ import com.example.imagesearch.data.SearchResponse
 
 class SearchFragment : Fragment() {
 
-    private val thumbnailUrls = listOf(
-        "https://dapi.kakao.com"
-    )
+    private val thumbnailUrls = ArrayList<String>()
 
     companion object {
-        const val THUMBNAIL_URLS_KEY = "https://dapi.kakao.com"
+        const val THUMBNAIL_URLS_KEY = "thumbnail_urls"
     }
 
     override fun onCreateView(

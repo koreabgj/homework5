@@ -11,14 +11,10 @@ import com.example.imagesearch.R
 
 class KeepFragment : Fragment() {
 
-    private lateinit var keepFragmentImageUrls: List<String>
-
-    private val thumbnailUrlList = mutableListOf(
-        "https://dapi.kakao.com"
-    )
+    private var thumbnailUrlList = mutableListOf<String>()
 
     companion object {
-        const val THUMBNAIL_URLS_KEY = "https://dapi.kakao.com"
+        const val THUMBNAIL_URLS_KEY = "thumbnail_urls"
     }
 
     override fun onCreateView(
@@ -28,7 +24,7 @@ class KeepFragment : Fragment() {
         val thumbnailUrls = arguments?.getStringArrayList(THUMBNAIL_URLS_KEY)
 
         if (thumbnailUrls != null) {
-            keepFragmentImageUrls = thumbnailUrls
+            thumbnailUrlList = thumbnailUrls
         }
 
         val view = inflater.inflate(R.layout.fragment_keep, container, false)
@@ -37,7 +33,7 @@ class KeepFragment : Fragment() {
 
         val adapter = KeepAdapter(thumbnailUrlList, object : KeepAdapter.OnItemClickListener {
             override fun onItemClick(thumbnailUrl: String) {
-                // 클릭한 이미지의 위치를 찾아서 삭제
+                // 클릭한 이미지 위치를 찾아서 삭제
                 val position = thumbnailUrlList.indexOf(thumbnailUrl)
                 if (position != -1) {
                     thumbnailUrlList.removeAt(position)

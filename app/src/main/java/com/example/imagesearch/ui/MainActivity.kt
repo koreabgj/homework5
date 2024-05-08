@@ -73,10 +73,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showFragment(fragment: Fragment) {
-        // 프래그먼트 교체 전에 모든 프래그먼트 숨기기
         supportFragmentManager.fragments.forEach { it.view?.visibility = View.GONE }
 
-        // 새로운 프래그먼트 표시
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
@@ -88,11 +86,11 @@ class MainActivity : AppCompatActivity() {
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
 
-        viewModel.searchResults.observe(this, Observer { images ->
+        viewModel.searchResults.observe(this, Observer {
             SearchAdapter.notifyItemChanged()
         })
 
-        viewModel.selectedImages.observe(this, Observer { images ->
+        viewModel.selectedImages.observe(this, Observer {
             KeepAdapter.notifyItemChanged()
         })
     }
@@ -150,31 +148,31 @@ class MainActivity : AppCompatActivity() {
         private const val LAST_SEARCH_KEY = "last_search"
     }
 
-    object ImageStorage {
-
-        private const val PREFS_NAME = "image_prefs"
-        private const val KEY_IMAGE = "image"
-
-        // 이미지를 Base64 문자열로 인코딩하여 저장
-        fun saveImage(context: Context, bitmap: Bitmap) {
-            val editor = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit()
-            val byteArrayOutputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-            val imageBytes = byteArrayOutputStream.toByteArray()
-            val imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT)
-            editor.putString(KEY_IMAGE, imageString)
-            editor.apply()
-        }
-
-        // 저장된 Base64 문자열을 디코딩하여 이미지를 불러옴
-        fun loadImage(context: Context): Bitmap? {
-            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            val imageString = prefs.getString(KEY_IMAGE, null)
-            if (imageString != null) {
-                val imageBytes = Base64.decode(imageString, Base64.DEFAULT)
-                return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-            }
-            return null
-        }
-    }
+//    object ImageStorage {
+//
+//        private const val PREFS_NAME = "image_prefs"
+//        private const val KEY_IMAGE = "image"
+//
+//        // 이미지를 Base64 문자열로 인코딩하여 저장
+//        fun saveImage(context: Context, bitmap: Bitmap) {
+//            val editor = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit()
+//            val byteArrayOutputStream = ByteArrayOutputStream()
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+//            val imageBytes = byteArrayOutputStream.toByteArray()
+//            val imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT)
+//            editor.putString(KEY_IMAGE, imageString)
+//            editor.apply()
+//        }
+//
+//        // 저장된 Base64 문자열을 디코딩하여 이미지를 불러옴
+//        fun loadImage(context: Context): Bitmap? {
+//            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+//            val imageString = prefs.getString(KEY_IMAGE, null)
+//            if (imageString != null) {
+//                val imageBytes = Base64.decode(imageString, Base64.DEFAULT)
+//                return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+//            }
+//            return null
+//        }
+//    }
 }

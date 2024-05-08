@@ -10,7 +10,7 @@ import com.example.imagesearch.databinding.ItemLayoutBinding
 
 class SearchAdapter(
     private val itemClickListener: OnItemClickListener,
-    private var itemList: List<ImageDocuments> = emptyList(),
+    private var thumbnailUrls: List<ImageDocuments> = emptyList(),
 ) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
@@ -35,25 +35,14 @@ class SearchAdapter(
                 // 이미지 업로드 날짜 및 시간
                 tvDatetime.text = item.dateTime.toString()
 
-                // 아이템 클릭 시 이벤트 처리
-                binding.root.setOnClickListener {
-                    val position = adapterPosition
-                    if (position != RecyclerView.NO_POSITION) {
-                        itemClickListener.onItemClick(thumbnailUrl = "", position)
-                    }
-                }
-
                 binding.ivLike.setOnClickListener {
-                    if (isLiked) {
-                        // 이미 좋아요된 상태이면 비어있는 하트로 변경
-                        binding.ivLike.setImageResource(R.drawable.img_empty_favorite)
-                    } else {
-                        // 좋아요되지 않은 상태이면 채워진 하트로 변경
-                        binding.ivLike.setImageResource(R.drawable.img_favorite)
-                    }
-
-                    // 좋아요 상태를 서버에 업데이트하고 UI에 반영
+                    // 좋아요 상태를 반전
                     isLiked = !isLiked
+
+                    // 좋아요 상태에 따라 이미지 변경
+                    val imageResource =
+                        if (isLiked) R.drawable.img_favorite else R.drawable.img_empty_favorite
+                    binding.ivLike.setImageResource(imageResource)
 
                     // 클릭한 아이템의 위치를 전달
                     val position = adapterPosition
@@ -71,12 +60,12 @@ class SearchAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = itemList[position]
+        val currentItem = thumbnailUrls[position]
         holder.bind(currentItem)
     }
 
     override fun getItemCount(): Int {
-        return itemList.size
+        return thumbnailUrls.size
     }
 
     companion object {
