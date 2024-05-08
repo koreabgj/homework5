@@ -49,4 +49,8 @@ class KeepAdapter(
     override fun getItemCount(): Int {
         return thumbnailUrlList.size
     }
+
+    companion object {
+        fun notifyItemChanged() {}
+    }
 }

@@ -10,7 +10,7 @@ import com.example.imagesearch.databinding.ItemLayoutBinding
 
 class SearchAdapter(
     private val itemClickListener: OnItemClickListener,
-    private var itemList: List<ImageDocuments> = emptyList()
+    private var itemList: List<ImageDocuments> = emptyList(),
 ) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
@@ -77,5 +77,9 @@ class SearchAdapter(
 
     override fun getItemCount(): Int {
         return itemList.size
+    }
+
+    companion object {
+        fun notifyItemChanged() {}
     }
 }

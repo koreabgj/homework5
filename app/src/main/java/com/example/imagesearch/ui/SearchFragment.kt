@@ -18,10 +18,6 @@ class SearchFragment : Fragment() {
 
     companion object {
         const val THUMBNAIL_URLS_KEY = "https://dapi.kakao.com"
-
-        fun submitList(images: List<SearchResponse>?) {
-            submitList(images)
-        }
     }
 
     override fun onCreateView(

@@ -89,11 +89,11 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
 
         viewModel.searchResults.observe(this, Observer { images ->
-            SearchFragment.submitList(images)
+            SearchAdapter.notifyItemChanged()
         })
 
         viewModel.selectedImages.observe(this, Observer { images ->
-            KeepFragment.submitList(images)
+            KeepAdapter.notifyItemChanged()
         })
     }
 

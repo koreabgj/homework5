@@ -25,7 +25,7 @@ data class ImageDocuments(
     val collection: String,
     @SerializedName("thumbnail_url") //
     val thumbnailUrl: String,
-    @SerializedName("image_url") //
+    @SerializedName("image_url")
     val imageUrl: String,
     @SerializedName("width")
     val width: Int,
