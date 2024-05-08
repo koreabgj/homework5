@@ -10,11 +10,11 @@ import com.example.imagesearch.databinding.ItemLayoutBinding
 
 class SearchAdapter(
     private val itemClickListener: OnItemClickListener,
-    private var itemList: List<ImageDocuments> = emptyList(),
+    private var itemList: List<ImageDocuments> = emptyList()
 ) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
-        fun onItemClick(imageUrl: String, position: Int)
+        fun onItemClick(thumbnailUrl: String, position: Int)
     }
 
     inner class ViewHolder(private val binding: ItemLayoutBinding) :
@@ -39,7 +39,7 @@ class SearchAdapter(
                 binding.root.setOnClickListener {
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-                        itemClickListener.onItemClick(imageUrl = "", position)
+                        itemClickListener.onItemClick(thumbnailUrl = "", position)
                     }
                 }
 
@@ -58,7 +58,7 @@ class SearchAdapter(
                     // 클릭한 아이템의 위치를 전달
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-                        itemClickListener.onItemClick(imageUrl = "", position)
+                        itemClickListener.onItemClick(thumbnailUrl = "", position)
                     }
                 }
             }

@@ -13,12 +13,12 @@ class KeepFragment : Fragment() {
 
     private lateinit var keepFragmentImageUrls: List<String>
 
-    private val imageUrlList = mutableListOf(
+    private val thumbnailUrlList = mutableListOf(
         "https://dapi.kakao.com"
     )
 
     companion object {
-        const val IMAGE_URLS_KEY = "https://dapi.kakao.com"
+        const val THUMBNAIL_URLS_KEY = "https://dapi.kakao.com"
 
         fun submitList(images: List<String>) {
             submitList(images)
@@ -29,22 +29,22 @@ class KeepFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val imageUrls = arguments?.getStringArrayList(IMAGE_URLS_KEY)
+        val thumbnailUrls = arguments?.getStringArrayList(THUMBNAIL_URLS_KEY)
 
-        if (imageUrls != null) {
-            keepFragmentImageUrls = imageUrls
+        if (thumbnailUrls != null) {
+            keepFragmentImageUrls = thumbnailUrls
         }
 
         val view = inflater.inflate(R.layout.fragment_keep, container, false)
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        val adapter = KeepAdapter(imageUrlList, object : KeepAdapter.OnItemClickListener {
-            override fun onItemClick(imageUrl: String) {
+        val adapter = KeepAdapter(thumbnailUrlList, object : KeepAdapter.OnItemClickListener {
+            override fun onItemClick(thumbnailUrl: String) {
                 // 클릭한 이미지의 위치를 찾아서 삭제
-                val position = imageUrlList.indexOf(imageUrl)
+                val position = thumbnailUrlList.indexOf(thumbnailUrl)
                 if (position != -1) {
-                    imageUrlList.removeAt(position)
+                    thumbnailUrlList.removeAt(position)
                 }
             }
         })

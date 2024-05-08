@@ -4,16 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.imagesearch.data.ImageDocuments
 import com.example.imagesearch.databinding.ItemLayoutBinding
 
 class KeepAdapter(
+    private val thumbnailUrlList: List<String>,
     private val itemClickListener: OnItemClickListener,
-    private val imageUrlList: List<String> = emptyList(),
 ) : RecyclerView.Adapter<KeepAdapter.ImageViewHolder>() {
 
     interface OnItemClickListener {
-        fun onItemClick(imageUrl: String)
+        fun onItemClick(thumbnailUrl: String)
     }
 
     inner class ImageViewHolder(private val binding: ItemLayoutBinding) :
@@ -21,8 +20,8 @@ class KeepAdapter(
 
         init {
             binding.root.setOnClickListener {
-                val imageUrl = imageUrlList[adapterPosition] // 아이템의 위치에 맞는 imageUrl
-                itemClickListener.onItemClick(imageUrl)
+                val thumbnailUrl = thumbnailUrlList[adapterPosition] // 아이템의 위치에 맞는 imageUrl
+                itemClickListener.onItemClick(thumbnailUrl)
             }
         }
 
@@ -43,11 +42,11 @@ class KeepAdapter(
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        val imageUrl = imageUrlList[position]
+        val imageUrl = thumbnailUrlList[position]
         holder.bind(imageUrl)
     }
 
     override fun getItemCount(): Int {
-        return imageUrlList.size
+        return thumbnailUrlList.size
     }
 }

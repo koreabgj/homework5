@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
 
     fun navigateToKeepFragment(imageUrl: String) {
         val bundle = Bundle().apply {
-            putString(KeepFragment.IMAGE_URLS_KEY, imageUrl)
+            putString(KeepFragment.THUMBNAIL_URLS_KEY, imageUrl)
         }
         val keepFragment = KeepFragment().apply {
             arguments = bundle

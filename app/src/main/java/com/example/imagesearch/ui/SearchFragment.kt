@@ -12,12 +12,12 @@ import com.example.imagesearch.data.SearchResponse
 
 class SearchFragment : Fragment() {
 
-    private val imageUrls = listOf(
+    private val thumbnailUrls = listOf(
         "https://dapi.kakao.com"
     )
 
     companion object {
-        const val IMAGE_URLS_KEY = "https://dapi.kakao.com"
+        const val THUMBNAIL_URLS_KEY = "https://dapi.kakao.com"
 
         fun submitList(images: List<SearchResponse>?) {
             submitList(images)
@@ -30,11 +30,11 @@ class SearchFragment : Fragment() {
     ): View? {
 
         Bundle().apply {
-            putStringArrayList(IMAGE_URLS_KEY, ArrayList(imageUrls))
+            putStringArrayList(THUMBNAIL_URLS_KEY, ArrayList(thumbnailUrls))
         }
 
-        fun navigateToKeepFragment(imageUrl: String) {
-            (requireActivity() as MainActivity).navigateToKeepFragment(imageUrl)
+        fun navigateToKeepFragment(thumbnailUrl: String) {
+            (requireActivity() as MainActivity).navigateToKeepFragment(thumbnailUrl)
         }
 
         val view = inflater.inflate(R.layout.fragment_search, container, false)
@@ -42,10 +42,10 @@ class SearchFragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        // 클릭한 이미지의 URL을 KeepFragment로 전달
+        // 클릭한 URL을 KeepFragment로 전달
         val adapter = SearchAdapter(object : SearchAdapter.OnItemClickListener {
-            override fun onItemClick(imageUrl: String, position: Int) {
-                navigateToKeepFragment(imageUrl)
+            override fun onItemClick(thumbnailUrl: String, position: Int) {
+                navigateToKeepFragment(thumbnailUrl)
             }
         })
 
