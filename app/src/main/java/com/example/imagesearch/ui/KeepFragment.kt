@@ -19,6 +19,10 @@ class KeepFragment : Fragment() {
 
     companion object {
         const val IMAGE_URLS_KEY = "https://dapi.kakao.com"
+
+        fun submitList(images: List<String>) {
+            submitList(images)
+        }
     }
 
     override fun onCreateView(

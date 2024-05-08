@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory
 import android.util.Base64
 import java.io.ByteArrayOutputStream
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.imagesearch.R
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
 
         setUpViews()
         observeViewModel()
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnSearch.setOnClickListener {
-            binding.fragmentContainerSearch.visibility = View.VISIBLE
+            showFragment(SearchFragment())
         }
 
         binding.btnExecuteSearch.setOnClickListener {
@@ -67,16 +68,32 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnKeep.setOnClickListener {
-            binding.fragmentContainerKeep.visibility = View.VISIBLE
+            showFragment(KeepFragment())
         }
+    }
+
+    private fun showFragment(fragment: Fragment) {
+        // 프래그먼트 교체 전에 모든 프래그먼트 숨기기
+        supportFragmentManager.fragments.forEach { it.view?.visibility = View.GONE }
+
+        // 새로운 프래그먼트 표시
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun observeViewModel() {
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
+
         viewModel.searchResults.observe(this, Observer { images ->
             SearchFragment.submitList(images)
+        })
+
+        viewModel.selectedImages.observe(this, Observer { images ->
+            KeepFragment.submitList(images)
         })
     }
 

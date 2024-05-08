@@ -21,7 +21,7 @@ class SearchAdapter(
     inner class ViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        private var isClickEvent = false
+        private var isLiked = false
 
         fun bind(item: ImageDocuments) {
             binding.apply {
@@ -44,14 +44,19 @@ class SearchAdapter(
                     }
                 }
 
-                // 좋아요 클릭시 이벤트 처리 & 좋아요 상태에 따라 UI 업데이트
                 binding.ivLike.setOnClickListener {
-                    if (isClickEvent) {
-                        ivLike.setImageResource(R.drawable.img_favorite)
+                    if (isLiked) {
+                        // 이미 좋아요된 상태이면 비어있는 하트로 변경
+                        binding.ivLike.setImageResource(R.drawable.img_empty_favorite)
                     } else {
-                        ivLike.setImageResource(R.drawable.img_empty_favorite)
+                        // 좋아요되지 않은 상태이면 채워진 하트로 변경
+                        binding.ivLike.setImageResource(R.drawable.img_favorite)
                     }
 
+                    // 좋아요 상태를 서버에 업데이트하고 UI에 반영
+                    isLiked = !isLiked
+
+                    // 클릭한 아이템의 위치를 전달
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
                         itemClickListener.onItemClick(imageUrl = "", position)
