@@ -4,16 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.imagesearch.data.Repository
 import com.example.imagesearch.data.SearchResponse
+import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
-    // 이미지 검색 결과를 저장하는 LiveData
+    fun searchImages(authorization: String, query: String, sort: String, page: Int, size: Int) {
+        viewModelScope.launch {
+            val result = repository.searchImages(authorization, query, sort, page, size)
+        }
+    }
+
     private val _searchResults = MutableLiveData<List<SearchResponse>>()
     val searchResults: LiveData<List<SearchResponse>> get() = _searchResults
 
-    // 선택된 이미지 리스트를 저장하는 LiveData
     private val _selectedImages = MutableLiveData<List<String>>()
     val selectedImages: LiveData<List<String>> get() = _selectedImages
 }
