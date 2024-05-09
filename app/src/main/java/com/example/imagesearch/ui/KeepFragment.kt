@@ -37,11 +37,13 @@ class KeepFragment : Fragment() {
                 val position = thumbnailUrlList.indexOf(thumbnailUrl)
                 if (position != -1) {
                     thumbnailUrlList.removeAt(position)
-                    KeepAdapter.notifyItemChanged()// 이미지를 삭제한 후 어댑터에 변경 알림
                 }
             }
         })
+
         recyclerView.adapter = adapter
+
+        adapter.submitList(thumbnailUrlList)
 
         return view
     }

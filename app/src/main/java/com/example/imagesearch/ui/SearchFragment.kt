@@ -22,16 +22,10 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
 
-        Bundle().apply {
-            putStringArrayList(THUMBNAIL_URLS_KEY, ArrayList(thumbnailUrls))
-        }
-
-        fun navigateToKeepFragment(thumbnailUrl: String) {
-            (requireActivity() as MainActivity).navigateToKeepFragment(thumbnailUrl)
-        }
+        // onCreateView 메서드에서 번들을 생성하고 프래그먼트의 인수로 설정
+        arguments?.getStringArrayList(THUMBNAIL_URLS_KEY)?.let { thumbnailUrls.addAll(it) }
 
         val view = inflater.inflate(R.layout.fragment_search, container, false)
-
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
@@ -44,6 +38,12 @@ class SearchFragment : Fragment() {
 
         recyclerView.adapter = adapter
 
+        adapter.submitList(thumbnailUrls)
+
         return view
+    }
+
+    fun navigateToKeepFragment(thumbnailUrl: String) {
+        (requireActivity() as MainActivity).navigateToKeepFragment(thumbnailUrl)
     }
 }

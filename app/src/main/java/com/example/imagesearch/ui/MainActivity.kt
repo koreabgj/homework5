@@ -1,5 +1,6 @@
 package com.example.imagesearch.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -8,12 +9,14 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.imagesearch.databinding.ActivityMainBinding
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.imagesearch.R
 import com.example.imagesearch.data.Repository
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
@@ -21,39 +24,28 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(binding.root)
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        enableEdgeToEdge()
 
-        val repository = Repository()
-        val viewModelFactory = MainViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
-
-        setUpViews()
-        observeViewModel()
-
-        val dateTime by lazy { }
-        formatDateTime(dateTime)
-    }
-
-    private fun setUpViews() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // 앱 실행시 SearchFragment 표시
+        showFragment(SearchFragment(), R.id.fragment_container_search)
 
         binding.btnSearch.setOnClickListener {
-            showFragment(SearchFragment())
+            showFragment(SearchFragment(), R.id.fragment_container_search)
+        }
+
+        binding.btnKeep.setOnClickListener {
+            showFragment(KeepFragment(), R.id.fragment_container_keep)
         }
 
         binding.btnExecuteSearch.setOnClickListener {
@@ -62,16 +54,29 @@ class MainActivity : AppCompatActivity() {
             hideKeyboard(it)
         }
 
-        binding.btnKeep.setOnClickListener {
-            showFragment(KeepFragment())
-        }
+        val repository = Repository()
+        val viewModelFactory = MainViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
+
+        viewModel.searchImages(
+            authorization = "KakaoAK d7dad5f8832c904973babb0a21d079ab",
+            query = "검색어",
+            sort = "accuracy",
+            page = 1,
+            size = 10
+        )
+
+        observeViewModel()
+
+        val dateTime = Date() // 현재 날짜와 시간을 나타내는 Date 객체 생성
+        formatDateTime(dateTime)
     }
 
-    private fun showFragment(fragment: Fragment) {
+    private fun showFragment(fragment: Fragment, containerId: Int) {
         supportFragmentManager.fragments.forEach { it.view?.visibility = View.GONE }
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
+            .replace(containerId, fragment)
             .addToBackStack(null)
             .commit()
     }
@@ -82,11 +87,9 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
 
         viewModel.searchResults.observe(this, Observer {
-            SearchAdapter.notifyItemChanged()
         })
 
         viewModel.selectedImages.observe(this, Observer {
-            KeepAdapter.notifyItemChanged()
         })
     }
 
@@ -120,7 +123,7 @@ class MainActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    private fun formatDateTime(dateTime: Unit): String {
+    private fun formatDateTime(dateTime: Date): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         return dateFormat.format(dateTime)
     }

@@ -10,14 +10,15 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="50dp"
         android:padding="8dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/card_search"
         app:layout_constraintTop_toBottomOf="@+id/et_search"
         app:spanCount="2"
+        tools:ignore="MissingConstraints"
         tools:listitem="@layout/item_layout" />
 
     <!-- 이미지 검색 프래그먼트를 담을 FrameLayout -->
@@ -30,7 +31,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="NotSibling" />
 
-    <!-- 검색창 -->
     <EditText
         android:id="@+id/et_search"
         android:layout_width="0dp"
@@ -47,7 +47,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 검색 실행 버튼 -->
     <Button
         android:id="@+id/btn_execute_search"
         android:layout_width="85dp"
@@ -69,7 +68,6 @@
         app:layout_constraintTop_toBottomOf="@+id/fragment_container_search"
         tools:ignore="NotSibling" />
 
-    <!-- 이미지 검색 버튼 카드뷰 -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_search"
         android:layout_width="165dp"
@@ -94,7 +92,6 @@
             android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
 
-    <!-- 내 보관함 버튼 카드뷰 -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_keep"
         android:layout_width="165dp"

@@ -12,7 +12,7 @@ class Repository {
     ): SearchResponse? {
         return try {
             val response = RetrofitClient.RetrofitInstance.retrofitService.getSearchImages(
-                authorization = "KakaoAK d7dad5f8832c904973babb0a21d079ab",
+                Authorization = "KakaoAK d7dad5f8832c904973babb0a21d079ab",
                 query = "검색어",
                 sort = "accuracy",
                 page = 1,

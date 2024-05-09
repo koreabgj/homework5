@@ -11,6 +11,7 @@ class KeepAdapter(
     private val itemClickListener: OnItemClickListener,
 ) : RecyclerView.Adapter<KeepAdapter.ImageViewHolder>() {
 
+
     interface OnItemClickListener {
         fun onItemClick(thumbnailUrl: String)
     }
@@ -50,7 +51,8 @@ class KeepAdapter(
         return thumbnailUrlList.size
     }
 
-    companion object {
-        fun notifyItemChanged() {}
+    fun submitList(images: List<String>) {
+        thumbnailUrlList
+        notifyDataSetChanged()
     }
 }

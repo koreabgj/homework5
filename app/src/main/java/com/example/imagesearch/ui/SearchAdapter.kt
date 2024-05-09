@@ -68,7 +68,8 @@ class SearchAdapter(
         return thumbnailUrls.size
     }
 
-    companion object {
-        fun notifyItemChanged() {}
+    fun submitList(images: ArrayList<String>) {
+        thumbnailUrls
+        notifyDataSetChanged()
     }
 }
