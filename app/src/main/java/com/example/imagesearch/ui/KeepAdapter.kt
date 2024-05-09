@@ -8,26 +8,29 @@ import com.example.imagesearch.databinding.ItemLayoutBinding
 
 class KeepAdapter(
     private val thumbnailUrlList: List<String>,
-    private val itemClickListener: OnItemClickListener,
+    param: OnItemClickListener,
 ) : RecyclerView.Adapter<KeepAdapter.ImageViewHolder>() {
-
 
     interface OnItemClickListener {
         fun onItemClick(thumbnailUrl: String)
     }
+
+    private var itemClickListener: OnItemClickListener? = null
 
     inner class ImageViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {
-                val thumbnailUrl = thumbnailUrlList[adapterPosition]
-                itemClickListener.onItemClick(thumbnailUrl)
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    itemClickListener?.onItemClick(thumbnailUrlList[position])
+                }
             }
         }
 
         fun bind(imageUrl: String) {
-            Glide.with(itemView.context)
+            Glide.with(binding.ivThumbnail.context)
                 .load(imageUrl)
                 .into(binding.ivThumbnail)
         }
@@ -43,16 +46,10 @@ class KeepAdapter(
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        val imageUrl = thumbnailUrlList[position]
-        holder.bind(imageUrl)
+        holder.bind(thumbnailUrlList[position])
     }
 
     override fun getItemCount(): Int {
         return thumbnailUrlList.size
-    }
-
-    fun submitList(images: List<String>) {
-        thumbnailUrlList
-        notifyDataSetChanged()
     }
 }

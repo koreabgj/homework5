@@ -67,9 +67,4 @@ class SearchAdapter(
     override fun getItemCount(): Int {
         return thumbnailUrls.size
     }
-
-    fun submitList(images: ArrayList<String>) {
-        thumbnailUrls
-        notifyDataSetChanged()
-    }
 }

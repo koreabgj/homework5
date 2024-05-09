@@ -13,6 +13,8 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.imagesearch.R
 import com.example.imagesearch.data.Repository
 import java.text.SimpleDateFormat
@@ -54,18 +56,6 @@ class MainActivity : AppCompatActivity() {
             hideKeyboard(it)
         }
 
-        val repository = Repository()
-        val viewModelFactory = MainViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
-
-        viewModel.searchImages(
-            authorization = "KakaoAK d7dad5f8832c904973babb0a21d079ab",
-            query = "검색어",
-            sort = "accuracy",
-            page = 1,
-            size = 10
-        )
-
         observeViewModel()
 
         val dateTime = Date() // 현재 날짜와 시간을 나타내는 Date 객체 생성
@@ -73,8 +63,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showFragment(fragment: Fragment, containerId: Int) {
-        supportFragmentManager.fragments.forEach { it.view?.visibility = View.GONE }
-
         supportFragmentManager.beginTransaction()
             .replace(containerId, fragment)
             .addToBackStack(null)
@@ -85,12 +73,13 @@ class MainActivity : AppCompatActivity() {
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
-
-        viewModel.searchResults.observe(this, Observer {
-        })
-
-        viewModel.selectedImages.observe(this, Observer {
-        })
+        viewModel.searchImages(
+            authorization = "KakaoAK d7dad5f8832c904973babb0a21d079ab",
+            query = "검색어",
+            sort = "accuracy",
+            page = 1,
+            size = 10
+        )
     }
 
     private fun searchImages() {

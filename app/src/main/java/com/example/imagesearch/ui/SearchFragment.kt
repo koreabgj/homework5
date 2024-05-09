@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.imagesearch.R
+import com.example.imagesearch.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment() {
 
+    private lateinit var binding: FragmentSearchBinding
     private val thumbnailUrls = ArrayList<String>()
+    private lateinit var viewModel: MainViewModel
 
     companion object {
         const val THUMBNAIL_URLS_KEY = "thumbnail_urls"
@@ -20,16 +24,15 @@ class SearchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
 
-        // onCreateView 메서드에서 번들을 생성하고 프래그먼트의 인수로 설정
+        binding = FragmentSearchBinding.inflate(inflater, container, false)
+
         arguments?.getStringArrayList(THUMBNAIL_URLS_KEY)?.let { thumbnailUrls.addAll(it) }
 
-        val view = inflater.inflate(R.layout.fragment_search, container, false)
-        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+        val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        // 클릭한 URL을 KeepFragment로 전달
         val adapter = SearchAdapter(object : SearchAdapter.OnItemClickListener {
             override fun onItemClick(thumbnailUrl: String, position: Int) {
                 navigateToKeepFragment(thumbnailUrl)
@@ -38,12 +41,15 @@ class SearchFragment : Fragment() {
 
         recyclerView.adapter = adapter
 
-        adapter.submitList(thumbnailUrls)
+        viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        viewModel.searchResults.observe(viewLifecycleOwner, Observer {
+            adapter.notifyDataSetChanged()
+        })
 
-        return view
+        return binding.root
     }
 
-    fun navigateToKeepFragment(thumbnailUrl: String) {
+    private fun navigateToKeepFragment(thumbnailUrl: String) {
         (requireActivity() as MainActivity).navigateToKeepFragment(thumbnailUrl)
     }
 }
