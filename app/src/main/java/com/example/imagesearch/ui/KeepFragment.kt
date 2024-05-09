@@ -27,7 +27,6 @@ class KeepFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-
         binding = FragmentKeepBinding.inflate(inflater, container, false)
 
         val thumbnailUrls = arguments?.getStringArrayList(THUMBNAIL_URLS_KEY)
@@ -35,13 +34,6 @@ class KeepFragment : Fragment() {
         thumbnailUrls?.let {
             thumbnailUrlList.addAll(it)
         }
-
-        viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
-        viewModel.thumbnailUrlList.observe(viewLifecycleOwner, Observer { list ->
-            thumbnailUrlList.clear()
-            thumbnailUrlList.addAll(list)
-            adapter.notifyDataSetChanged()
-        })
 
         adapter = KeepAdapter(thumbnailUrlList, object : KeepAdapter.OnItemClickListener {
             @SuppressLint("NotifyDataSetChanged")
@@ -58,6 +50,13 @@ class KeepFragment : Fragment() {
         val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+
+        viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        viewModel.thumbnailUrlList.observe(viewLifecycleOwner, Observer { list ->
+            thumbnailUrlList.clear()
+            thumbnailUrlList.addAll(list)
+            adapter.notifyDataSetChanged()
+        })
 
         return binding.root
     }

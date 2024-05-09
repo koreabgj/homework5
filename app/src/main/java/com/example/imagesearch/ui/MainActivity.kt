@@ -11,10 +11,7 @@ import com.example.imagesearch.databinding.ActivityMainBinding
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.imagesearch.R
 import com.example.imagesearch.data.Repository
 import java.text.SimpleDateFormat

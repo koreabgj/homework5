@@ -40,7 +40,7 @@ class SearchAdapter(
                         if (isLiked) R.drawable.img_favorite else R.drawable.img_empty_favorite
                     binding.ivLike.setImageResource(imageResource)
 
-                    // 클릭한 아이템의 위치를 전달
+                    // 클릭한 이미지의 위치를 전달
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
                         itemClickListener.onItemClick(thumbnailUrl = "", position)

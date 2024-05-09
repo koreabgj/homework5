@@ -15,8 +15,8 @@ import com.example.imagesearch.databinding.FragmentSearchBinding
 class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
-    private lateinit var viewModel: MainViewModel
     private lateinit var adapter: SearchAdapter
+    private lateinit var viewModel: MainViewModel
 
     companion object {
         const val THUMBNAIL_URLS_KEY = "thumbnail_urls"
@@ -27,10 +27,7 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-
         binding = FragmentSearchBinding.inflate(inflater, container, false)
-
-        viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
         adapter = SearchAdapter(object : SearchAdapter.OnItemClickListener {
             override fun onItemClick(thumbnailUrl: String, position: Int) {
@@ -41,6 +38,8 @@ class SearchFragment : Fragment() {
         val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+
+        viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
         val thumbnailUrls = arguments?.getStringArrayList(THUMBNAIL_URLS_KEY)
         thumbnailUrls?.let {
