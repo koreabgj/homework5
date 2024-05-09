@@ -1,5 +1,6 @@
 package com.example.imagesearch.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,13 +16,13 @@ class KeepFragment : Fragment() {
 
     private lateinit var binding: FragmentKeepBinding
     private lateinit var adapter: KeepAdapter
-    private var thumbnailUrlList = mutableListOf<String>()
     private lateinit var viewModel: MainViewModel
 
     companion object {
         const val THUMBNAIL_URLS_KEY = "thumbnail_urls"
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -30,14 +31,16 @@ class KeepFragment : Fragment() {
         binding = FragmentKeepBinding.inflate(inflater, container, false)
 
         val thumbnailUrls = arguments?.getStringArrayList(THUMBNAIL_URLS_KEY)
-        if (thumbnailUrls != null) {
-            thumbnailUrlList.addAll(thumbnailUrls)
+        val thumbnailUrlList = mutableListOf<String>()
+        thumbnailUrls?.let {
+            thumbnailUrlList.addAll(it)
         }
 
-        val recyclerView: RecyclerView = binding.recyclerView
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        viewModel.thumbnailUrlList.value = thumbnailUrlList
 
         adapter = KeepAdapter(thumbnailUrlList, object : KeepAdapter.OnItemClickListener {
+            @SuppressLint("NotifyDataSetChanged")
             override fun onItemClick(thumbnailUrl: String) {
                 // 클릭한 이미지 위치를 찾아서 삭제
                 val position = thumbnailUrlList.indexOf(thumbnailUrl)
@@ -48,12 +51,9 @@ class KeepFragment : Fragment() {
             }
         })
 
+        val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.adapter = adapter
-
-        viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
-        viewModel.selectedImages.observe(viewLifecycleOwner, Observer {
-            adapter.notifyDataSetChanged()
-        })
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
         return binding.root
     }

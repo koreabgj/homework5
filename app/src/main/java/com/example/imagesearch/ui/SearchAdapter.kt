@@ -24,22 +24,17 @@ class SearchAdapter(
 
         fun bind(item: ImageDocuments) {
             binding.apply {
-                // 이미지 썸네일
                 Glide.with(itemView.context)
                     .load(item.thumbnailUrl)
                     .into(ivThumbnail)
 
-                // 이미지 소스
                 tvSite.text = item.displaySiteName
 
-                // 이미지 업로드 날짜 및 시간
                 tvDatetime.text = item.dateTime.toString()
 
                 binding.ivLike.setOnClickListener {
-                    // 좋아요 상태를 반전
                     isLiked = !isLiked
 
-                    // 좋아요 상태에 따라 이미지 변경
                     val imageResource =
                         if (isLiked) R.drawable.img_favorite else R.drawable.img_empty_favorite
                     binding.ivLike.setImageResource(imageResource)

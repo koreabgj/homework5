@@ -1,11 +1,11 @@
 package com.example.imagesearch.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,13 +14,13 @@ import com.example.imagesearch.databinding.FragmentSearchBinding
 class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
-    private val thumbnailUrls = ArrayList<String>()
     private lateinit var viewModel: MainViewModel
 
     companion object {
         const val THUMBNAIL_URLS_KEY = "thumbnail_urls"
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -28,10 +28,12 @@ class SearchFragment : Fragment() {
 
         binding = FragmentSearchBinding.inflate(inflater, container, false)
 
-        arguments?.getStringArrayList(THUMBNAIL_URLS_KEY)?.let { thumbnailUrls.addAll(it) }
+        viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
-        val recyclerView: RecyclerView = binding.recyclerView
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        val thumbnailUrls = arguments?.getStringArrayList(SearchFragment.THUMBNAIL_URLS_KEY)
+        thumbnailUrls?.let {
+            viewModel.setThumbnailUrls(it)
+        }
 
         val adapter = SearchAdapter(object : SearchAdapter.OnItemClickListener {
             override fun onItemClick(thumbnailUrl: String, position: Int) {
@@ -39,12 +41,11 @@ class SearchFragment : Fragment() {
             }
         })
 
+        val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.adapter = adapter
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
-        viewModel.searchResults.observe(viewLifecycleOwner, Observer {
-            adapter.notifyDataSetChanged()
-        })
+        adapter.notifyDataSetChanged()
 
         return binding.root
     }
