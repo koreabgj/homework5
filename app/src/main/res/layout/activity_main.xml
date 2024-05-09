@@ -21,7 +21,7 @@
         tools:ignore="MissingConstraints"
         tools:listitem="@layout/item_layout" />
 
-    <!-- 이미지 검색 프래그먼트를 담을 FrameLayout -->
+    <!-- 이미지 검색 프래그먼트 -->
     <FrameLayout
         android:id="@+id/fragment_container_search"
         android:layout_width="match_parent"
@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/et_search" />
 
-    <!-- 내 보관함 프래그먼트를 담을 FrameLayout -->
+    <!-- 이미지 보관 프래그먼트 -->
     <FrameLayout
         android:id="@+id/fragment_container_keep"
         android:layout_width="match_parent"

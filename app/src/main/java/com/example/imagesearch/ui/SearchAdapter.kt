@@ -1,6 +1,5 @@
 package com.example.imagesearch.ui
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -60,7 +59,6 @@ class SearchAdapter(
     }
 
     override fun getItemCount(): Int {
-//        Log.d("Adapter", "Item count: ${thumbnailUrls.size}")
         return thumbnailUrls.size
     }
 }

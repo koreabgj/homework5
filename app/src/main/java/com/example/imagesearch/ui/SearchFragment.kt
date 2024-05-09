@@ -31,6 +31,7 @@ class SearchFragment : Fragment() {
 
         adapter = SearchAdapter(object : SearchAdapter.OnItemClickListener {
             override fun onItemClick(thumbnailUrl: String, position: Int) {
+                // 이미지 클릭시 보관함으로 이동
                 navigateToKeepFragment(thumbnailUrl)
             }
         })
@@ -41,6 +42,7 @@ class SearchFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
+        // 썸네일 이미지 리스트 설정
         val thumbnailUrls = arguments?.getStringArrayList(THUMBNAIL_URLS_KEY)
         thumbnailUrls?.let {
             viewModel.setThumbnailUrls(it)
@@ -54,7 +56,7 @@ class SearchFragment : Fragment() {
         return binding.root
     }
 
-    private fun navigateToKeepFragment(thumbnailUrl: String) {
+    fun navigateToKeepFragment(thumbnailUrl: String) {
         (requireActivity() as MainActivity).navigateToKeepFragment(thumbnailUrl)
     }
 }

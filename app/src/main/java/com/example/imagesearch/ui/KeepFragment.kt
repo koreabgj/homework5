@@ -29,6 +29,7 @@ class KeepFragment : Fragment() {
     ): View {
         binding = FragmentKeepBinding.inflate(inflater, container, false)
 
+        // 선택된 썸네일 이미지 리스트를 받아오기
         val thumbnailUrls = arguments?.getStringArrayList(THUMBNAIL_URLS_KEY)
         val thumbnailUrlList = mutableListOf<String>()
         thumbnailUrls?.let {

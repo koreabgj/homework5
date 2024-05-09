@@ -37,16 +37,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 앱 실행시 SearchFragment
-        showFragment(SearchFragment(), R.id.fragment_container_search)
+        if (savedInstanceState == null) {
+            showFragment(SearchFragment(), R.id.fragment_container_search)
+        }
 
+        // 이미지 검색 클릭시 SearchFragment
         binding.btnSearch.setOnClickListener {
             showFragment(SearchFragment(), R.id.fragment_container_search)
         }
 
+        // 이미지 저장 클릭시 KeepFragment
         binding.btnKeep.setOnClickListener {
             showFragment(KeepFragment(), R.id.fragment_container_keep)
         }
 
+        // 검색 실행
         binding.btnExecuteSearch.setOnClickListener {
             searchImages()
             setLastSearchToSearchField()
@@ -79,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    // 검색어 저장
     private fun searchImages() {
         val searchQuery = binding.etSearch.text.toString()
         saveLastSearch(searchQuery)
@@ -91,6 +97,7 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    // 마지막 검색어를 검색창에 표시
     private fun setLastSearchToSearchField() {
         val lastSearch = getLastSearch()
         lastSearch?.let {
@@ -114,9 +121,10 @@ class MainActivity : AppCompatActivity() {
         return dateFormat.format(dateTime)
     }
 
-    fun navigateToKeepFragment(imageUrl: String) {
+    // Bundle 객체를 생성하여 KeepFragment에 전달할 데이터로 thumbnailUrl을 설정
+    fun navigateToKeepFragment(thumbnailUrl: String) {
         val bundle = Bundle().apply {
-            putString(KeepFragment.THUMBNAIL_URLS_KEY, imageUrl)
+            putString(KeepFragment.THUMBNAIL_URLS_KEY, thumbnailUrl)
         }
         val keepFragment = KeepFragment().apply {
             arguments = bundle
