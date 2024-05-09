@@ -1,13 +1,10 @@
 package com.example.imagesearch.ui
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.imagesearch.data.ImageDocuments
 import com.example.imagesearch.data.Repository
-import com.example.imagesearch.data.SearchResponse
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
@@ -18,7 +15,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    private val _thumbnailUrls = MutableLiveData<List<String>>()
+    val _thumbnailUrls = MutableLiveData<List<String>>()
     fun setThumbnailUrls(thumbnailUrls: List<String>) {
         _thumbnailUrls.value = thumbnailUrls
     }

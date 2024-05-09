@@ -37,7 +37,11 @@ class KeepFragment : Fragment() {
         }
 
         viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
-        viewModel.thumbnailUrlList.value = thumbnailUrlList
+        viewModel.thumbnailUrlList.observe(viewLifecycleOwner, Observer { list ->
+            thumbnailUrlList.clear()
+            thumbnailUrlList.addAll(list)
+            adapter.notifyDataSetChanged()
+        })
 
         adapter = KeepAdapter(thumbnailUrlList, object : KeepAdapter.OnItemClickListener {
             @SuppressLint("NotifyDataSetChanged")

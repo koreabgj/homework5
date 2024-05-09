@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // 앱 실행시 SearchFragment 표시
+        // 앱 실행시 SearchFragment
         showFragment(SearchFragment(), R.id.fragment_container_search)
 
         binding.btnSearch.setOnClickListener {
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
         observeViewModel()
 
-        val dateTime = Date() // 현재 날짜와 시간을 나타내는 Date 객체 생성
+        val dateTime = Date()
         formatDateTime(dateTime)
     }
 

@@ -1,5 +1,6 @@
 package com.example.imagesearch.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.example.imagesearch.databinding.ItemLayoutBinding
 
 class SearchAdapter(
     private val itemClickListener: OnItemClickListener,
-    private var thumbnailUrls: List<ImageDocuments> = emptyList(),
+    var thumbnailUrls: List<ImageDocuments> = emptyList(),
 ) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
@@ -55,11 +56,11 @@ class SearchAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = thumbnailUrls[position]
-        holder.bind(currentItem)
+        holder.bind(thumbnailUrls[position])
     }
 
     override fun getItemCount(): Int {
+//        Log.d("Adapter", "Item count: ${thumbnailUrls.size}")
         return thumbnailUrls.size
     }
 }

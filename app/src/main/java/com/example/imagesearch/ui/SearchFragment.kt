@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
     private lateinit var viewModel: MainViewModel
+    private lateinit var adapter: SearchAdapter
 
     companion object {
         const val THUMBNAIL_URLS_KEY = "thumbnail_urls"
@@ -30,12 +32,7 @@ class SearchFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
-        val thumbnailUrls = arguments?.getStringArrayList(SearchFragment.THUMBNAIL_URLS_KEY)
-        thumbnailUrls?.let {
-            viewModel.setThumbnailUrls(it)
-        }
-
-        val adapter = SearchAdapter(object : SearchAdapter.OnItemClickListener {
+        adapter = SearchAdapter(object : SearchAdapter.OnItemClickListener {
             override fun onItemClick(thumbnailUrl: String, position: Int) {
                 navigateToKeepFragment(thumbnailUrl)
             }
@@ -45,7 +42,15 @@ class SearchFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        adapter.notifyDataSetChanged()
+        val thumbnailUrls = arguments?.getStringArrayList(THUMBNAIL_URLS_KEY)
+        thumbnailUrls?.let {
+            viewModel.setThumbnailUrls(it)
+        }
+
+        viewModel._thumbnailUrls.observe(viewLifecycleOwner, Observer {
+            adapter.thumbnailUrls
+            adapter.notifyDataSetChanged()
+        })
 
         return binding.root
     }

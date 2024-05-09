@@ -8,14 +8,12 @@ import com.example.imagesearch.databinding.ItemLayoutBinding
 
 class KeepAdapter(
     private val thumbnailUrlList: List<String>,
-    param: OnItemClickListener,
+    private val itemClickListener: OnItemClickListener,
 ) : RecyclerView.Adapter<KeepAdapter.ImageViewHolder>() {
 
     interface OnItemClickListener {
         fun onItemClick(thumbnailUrl: String)
     }
-
-    private var itemClickListener: OnItemClickListener? = null
 
     inner class ImageViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -24,7 +22,7 @@ class KeepAdapter(
             binding.root.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    itemClickListener?.onItemClick(thumbnailUrlList[position])
+                    itemClickListener.onItemClick(thumbnailUrlList[position])
                 }
             }
         }
