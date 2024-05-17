@@ -75,19 +75,20 @@ class MainActivity : AppCompatActivity() {
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
-        viewModel.searchImages(
-            authorization = "KakaoAK d7dad5f8832c904973babb0a21d079ab",
-            query = "검색어",
-            sort = "accuracy",
-            page = 1,
-            size = 10
-        )
     }
+
 
     // 검색어 저장
     private fun searchImages() {
         val searchQuery = binding.etSearch.text.toString()
+        viewModel.searchImages(
+            query = searchQuery,
+            sort = "accuracy",
+            page = 1,
+            size = 10
+        )
         saveLastSearch(searchQuery)
+        showFragment(SearchFragment(), R.id.fragment_container_search)
     }
 
     private fun saveLastSearch(searchQuery: String) {

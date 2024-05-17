@@ -10,8 +10,14 @@ import com.example.imagesearch.databinding.ItemLayoutBinding
 
 class SearchAdapter(
     private val itemClickListener: OnItemClickListener,
-    var thumbnailUrls: List<ImageDocuments> = emptyList(),
 ) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+
+    private var imageDocuments: List<ImageDocuments> = emptyList()
+
+    fun submitList(list: List<ImageDocuments>) {
+        imageDocuments = list
+        notifyDataSetChanged()
+    }
 
     interface OnItemClickListener {
         fun onItemClick(thumbnailUrl: String, position: Int)
@@ -24,7 +30,7 @@ class SearchAdapter(
 
         fun bind(item: ImageDocuments) {
             binding.apply {
-                Glide.with(itemView.context)
+                Glide.with(binding.root)// binding.root 사용 가능
                     .load(item.thumbnailUrl)
                     .into(ivThumbnail)
 
@@ -55,10 +61,10 @@ class SearchAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(thumbnailUrls[position])
+        holder.bind(imageDocuments[position])
     }
 
     override fun getItemCount(): Int {
-        return thumbnailUrls.size
+        return imageDocuments.size
     }
 }

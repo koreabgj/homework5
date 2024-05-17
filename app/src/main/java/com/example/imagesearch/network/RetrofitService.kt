@@ -9,10 +9,10 @@ import retrofit2.http.Query
 interface RetrofitService {
     @GET("v2/search/image")
     suspend fun getSearchImages(
-        @Header("Authorization") Authorization: String = "KakaoAK d7dad5f8832c904973babb0a21d079ab",
-        @Query("query") query: String = "검색어",
-        @Query("sort") sort: String = "accuracy",
-        @Query("page") page: Int = 1,
-        @Query("size") size: Int = 80,
+        @Header("Authorization") authorization: String = "KakaoAK d7dad5f8832c904973babb0a21d079ab",
+        @Query("query") query: String ,
+        @Query("sort") sort: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
     ): Response<SearchResponse>
 }

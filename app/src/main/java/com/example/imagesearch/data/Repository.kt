@@ -1,27 +1,25 @@
 package com.example.imagesearch.data
 
-import com.example.imagesearch.network.RetrofitClient
+import com.example.imagesearch.network.RetrofitInstance
 
 class Repository {
     suspend fun searchImages(
-        authorization: String,
         query: String,
         sort: String,
         page: Int,
         size: Int,
-    ): SearchResponse? {
+    ): List<ImageDocuments> {
         return try {
-            val response = RetrofitClient.RetrofitInstance.retrofitService.getSearchImages(
-                Authorization = "KakaoAK d7dad5f8832c904973babb0a21d079ab",
-                query = "검색어",
-                sort = "accuracy",
-                page = 1,
-                size = 80
+            val response = RetrofitInstance.retrofitService.getSearchImages(
+                query = query,
+                sort = sort,
+                page = page,
+                size = size
             )
             if (response.isSuccessful) {
-                response.body()
+                response.body()?.imageDocuments ?: emptyList()
             } else {
-                null
+                emptyList()
             }
         } catch (e: Exception) {
             throw e

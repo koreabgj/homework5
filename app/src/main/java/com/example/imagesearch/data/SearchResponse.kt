@@ -1,40 +1,39 @@
 package com.example.imagesearch.data
 
-import com.google.gson.annotations.SerializedName
-import com.google.type.DateTime
-import com.example.imagesearch.data.ImageMeta as ImageMeta
+import com.squareup.moshi.Json
+import java.util.Date
 
 data class SearchResponse(
-    @SerializedName("meta")
+    @Json(name ="meta")
     val imageMeta: ImageMeta,
-    @SerializedName("documents")
-    val imageDocuments: ImageDocuments
+    @Json(name ="documents")
+    val imageDocuments: List<ImageDocuments>
 )
 
 data class ImageMeta(
-    @SerializedName("total_count")
+    @Json(name="total_count")
     val totalCount: Int,
-    @SerializedName("pageable_count")
+    @Json(name="pageable_count")
     val pageableCount: Int,
-    @SerializedName("is_end")
+    @Json(name="is_end")
     val isEnd: Boolean
 )
 
 data class ImageDocuments(
-    @SerializedName("collection")
+    @Json(name="collection")
     val collection: String,
-    @SerializedName("thumbnail_url") //
+    @Json(name="thumbnail_url") //
     val thumbnailUrl: String,
-    @SerializedName("image_url")
+    @Json(name="image_url")
     val imageUrl: String,
-    @SerializedName("width")
+    @Json(name="width")
     val width: Int,
-    @SerializedName("height")
+    @Json(name="height")
     val height: Int,
-    @SerializedName("display_sitename") //
+    @Json(name="display_sitename") //
     val displaySiteName: String,
-    @SerializedName("doc_url")
+    @Json(name="doc_url")
     val docUrl: String,
-    @SerializedName("datetime") //
-    val dateTime: DateTime
+    @Json(name="datetime") //
+    val dateTime: Date
 )
